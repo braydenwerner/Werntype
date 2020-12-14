@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 
 import firebase from 'firebase/app'
 import 'firebase/firestore'
-//  import { useCollectionData } from 'react-firebase-hooks/firestore'
 
 import { useRecoilState } from 'recoil'
 import { names as namesAtom } from './recoil'
@@ -22,19 +21,23 @@ firebase.initializeApp({
 const firestore = firebase.firestore()
 
 function App() {
-  const [names, setNames] = useRecoilState(namesAtom)
+  const [data, setData] = useRecoilState(namesAtom)
 
   async function getData() {
-    const nameArray = []
+    const dataArray = {}
     const userRef = firestore.collection('users')
     const snapshot = await userRef.get()
 
     snapshot.forEach(doc => {
-      console.log(names)
-      nameArray.push(doc.data().Name)
+      console.log(data)
+
+      dataArray[doc.id] = {
+        Name: doc.data().Name,
+        Age: doc.data().Age
+      }
     })
 
-    setNames(nameArray)
+    setData(dataArray)
   }
 
   useEffect(() => {

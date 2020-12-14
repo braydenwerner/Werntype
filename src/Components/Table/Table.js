@@ -17,13 +17,15 @@ export default function Table() {
                 <thead>
                     <tr>
                         <th>Name</th>
+                        <th>Age</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {tableData.map((n) => {
+                    {Object.keys(tableData).map((key) => {
                         return (
-                            <tr key={n}>
-                                <th>{n}</th>
+                            <tr key={key}>
+                                <th>{tableData[key].Name}</th>
+                                <th>{tableData[key].Age}</th>
                             </tr>
                         )
                     })}
