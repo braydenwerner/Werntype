@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Prompt&display=swap");
+
 #keyboard-outer-container {
   position: fixed;
   top: 60%;
@@ -13,38 +15,37 @@
   justify-content: center;
 }
 
-.key-highlight-false {
+@mixin key {
   font-size: 40px;
   margin: 5px 5px 5px 5px;
   display: flex;
-  background-color: white;
   color: black;
   border-radius: 5px;
-  border: 1px solid red;
+  border: 1px solid #9ee493;
   text-align: center;
   justify-content: center;
   align-items: center;
   width: 40px;
   height: 40px;
   position: relative;
+}
+
+#Space {
+  width: 200px;
+}
+
+.key-highlight-false {
+  @include key;
+  background-color: none;
 }
 
 .key-highlight-true {
-  font-size: 40px;
-  margin: 5px 5px 5px 5px;
-  display: flex;
-  background-color: blue;
-  color: black;
-  border-radius: 5px;
-  border: 1px solid red;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  width: 40px;
-  height: 40px;
-  position: relative;
+  @include key;
+  background-color: #9ee493;
 }
 
 .key {
+  font-family: "Prompt", sans-serif;
   font-size: 30px;
+  color: #9ee493;
 }

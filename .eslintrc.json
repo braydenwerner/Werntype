@@ -16,6 +16,7 @@
     "indent": "off",
     "space-before-function-paren": "off",
     "no-tabs": "off",
-    "dot-notation": "off"
+    "dot-notation": "off",
+    "no-unused-vars": "off"
   }
 }
