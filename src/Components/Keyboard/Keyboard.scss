@@ -13,11 +13,27 @@
   justify-content: center;
 }
 
-.key-container {
+.key-highlight-false {
   font-size: 40px;
   margin: 5px 5px 5px 5px;
   display: flex;
   background-color: white;
+  color: black;
+  border-radius: 5px;
+  border: 1px solid red;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  position: relative;
+}
+
+.key-highlight-true {
+  font-size: 40px;
+  margin: 5px 5px 5px 5px;
+  display: flex;
+  background-color: blue;
   color: black;
   border-radius: 5px;
   border: 1px solid red;
