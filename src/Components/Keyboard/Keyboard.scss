@@ -1,11 +1,10 @@
 #keyboard-outer-container {
   position: fixed;
-  top: 50%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
-  background-color: black;
   width: 600px;
 }
 
@@ -18,8 +17,8 @@
   font-size: 40px;
   margin: 5px 5px 5px 5px;
   display: flex;
-  background-color: transparent;
-  color: purple;
+  background-color: white;
+  color: black;
   border-radius: 5px;
   border: 1px solid red;
   text-align: center;
