@@ -1,10 +1,10 @@
 import React from 'react'
-import { AnimationPage } from './Pages/exports'
+import { TypingPage } from './Pages/exports'
 
 function App() {
   return (
     <>
-      <AnimationPage />
+      <TypingPage />
     </>
   )
 }
