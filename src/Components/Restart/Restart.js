@@ -28,7 +28,7 @@ export default function Restart() {
 
   const handleKeyDown = (e) => {
     console.log(e.key)
-    if (e.key === 'Control') restart()
+    if (e.key === 'Escape') restart()
   }
 
   const restart = () => {
@@ -47,7 +47,7 @@ export default function Restart() {
         <div id="restart-image" onClick={restart} />
       )}
       <div id="restart-text">
-        Press <key>Cntrl</key> for quick restart
+        Press <key>Escape</key> for quick restart
       </div>
     </>
   )

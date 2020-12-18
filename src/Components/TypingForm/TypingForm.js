@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import {
-  formState,
   correctIndexState,
   currentIndexState,
   pageState,
@@ -42,6 +41,7 @@ export default function TypingForm() {
   // words per minute the user types
   const [WPM, setWPM] = useState(0)
 
+  //  if the prompt is changed, reset the form
   useEffect(() => {
     if (formRef.current) formRef.current.value = ''
   }, [currentPrompt])
