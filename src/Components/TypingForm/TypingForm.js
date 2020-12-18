@@ -30,10 +30,20 @@ export default function TypingForm() {
     //  toggles state and renders components accordingly
     const [currentPageState, setCurrentPageState] = useRecoilState(pageState)
 
+    //  starting time when first key is typed
+    const [startTime, setStartTime] = useState(0)
+
+    // words per minute the user types
+    const [WPM, setWPM] = useState(0)
+
     //  0 -> currentCorrectIndex is green
     //  currentCorrectIndex + 1 -> currentIndex is red
     //  currentCurrentIndex + 1 -> currentPrompt.length is white
+
     const handleKeyDown = (e) => {
+        if (currentIndex === 0) setStartTime(Date.now())
+
+        const numWords = currentPrompt.split(' ').length
         const currentWord = currentPrompt.split(' ')[currentWordIndex]
         const formValue = formRef.current.value
 
@@ -50,15 +60,16 @@ export default function TypingForm() {
                 return oldCurrentWord + 1
             })
 
-            setCurrentWordStartIndex((oldCurrentWOrdStartIndex) => {
-                return oldCurrentWOrdStartIndex + formValue.length
+            setCurrentWordStartIndex((oldCurrentWordStartIndex) => {
+                return oldCurrentWordStartIndex + formValue.length
             })
 
             formRef.current.value = ''
         }
 
-        if (currentWordIndex === currentPrompt.split(' ').length - 1 && formValue === currentWord) {
-            setCurrentPageState('test')
+        if (currentWordIndex === numWords - 1 && formValue === currentWord) {
+            setCurrentPageState('summaryState')
+            setWPM(numWords / ((Date.now() - startTime) / 60000))
         }
 
         setCurrentCorrectIndex(totalCorrectIndex)
@@ -67,7 +78,7 @@ export default function TypingForm() {
 
     return (
         <>
-            { currentPageState === 'typingState' && (
+            {currentPageState === 'typingState' && (
                 <div id="typingForm-outer-container">
                     <div id="text-prompt">
                         <span style={{ color: '9EE493' }}>{currentPrompt.substring(0, currentCorrectIndex)}</span>
@@ -77,8 +88,13 @@ export default function TypingForm() {
 
                     <input id="typing-form" type="text" placeholder="Type Here" maxLength={15} onChange={handleKeyDown} ref={formRef} autoFocus></input>
                 </div>
-            )
-            }
+            )}
+
+            {currentPageState === 'summaryState' && (
+                <div id="summaryForm-outer-container">
+                    <div id="summary-wpm">WPM: {WPM}</div>
+                </div>
+            )}
         </>
     )
 }
