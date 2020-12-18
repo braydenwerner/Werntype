@@ -1,8 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=Prompt&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
 
 #keyboard-outer-container {
   position: fixed;
-  top: 60%;
+  top: 70%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
@@ -45,7 +45,7 @@
 }
 
 .key {
-  font-family: "Prompt", sans-serif;
+  font-family: 'Prompt', sans-serif;
   font-size: 30px;
   color: #9ee493;
 }

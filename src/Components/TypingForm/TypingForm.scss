@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Prompt&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
 
 #typingForm-outer-container {
   position: fixed;
@@ -15,14 +15,14 @@
     text-align: center;
     color: #9ee493;
     span {
-      font-family: "Prompt", sans-serif;
-      font-size: 40px;
+      font-family: 'Prompt', sans-serif;
+      font-size: 30px;
     }
   }
 
   #typing-form {
-    position: fixed;
-    top: 40%;
+    position: relative;
+    top: 15%;
     width: 75%;
     height: 10%;
     outline: none;
@@ -51,7 +51,7 @@
   color: #9ee493;
 
   #summary-wpm {
-    font-family: "Prompt", sans-serif;
+    font-family: 'Prompt', sans-serif;
     font-size: 40px;
   }
 }
