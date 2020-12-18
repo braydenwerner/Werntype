@@ -1,19 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
 
 #typingForm-outer-container {
-  position: fixed;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 800px;
-  height: 300px;
+
+  @media (max-width: 850px) {
+    width: 80%;
+  }
 
   #text-prompt {
     text-align: center;
     color: #9ee493;
+    margin-bottom: 25px;
     span {
       font-family: 'Prompt', sans-serif;
       font-size: 30px;
@@ -21,14 +21,12 @@
   }
 
   #typing-form {
-    position: relative;
-    top: 15%;
-    width: 75%;
+    width: 55%;
     height: 10%;
     outline: none;
     border: none;
     border-radius: 10px;
-    padding: 5px;
+    padding: 7px;
   }
 
   ::placeholder {
@@ -38,15 +36,6 @@
 }
 
 #summaryForm-outer-container {
-  position: fixed;
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 800px;
-  height: 300px;
   text-align: center;
   color: #9ee493;
 
