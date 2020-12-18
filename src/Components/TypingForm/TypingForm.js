@@ -43,16 +43,13 @@ export default function TypingForm() {
   const [WPM, setWPM] = useState(0)
 
   useEffect(() => {
-    formRef.current.value = ''
+    if (formRef.current) formRef.current.value = ''
   }, [currentPrompt])
 
   //  0 -> currentCorrectIndex is green
   //  currentCorrectIndex + 1 -> currentIndex is red
   //  currentCurrentIndex + 1 -> currentPrompt.length is white
   const handleKeyDown = () => {
-    if (formRef.current.value === 'p') setCurrentPageState('summaryState')
-    console.log('reached')
-
     if (currentIndex === 0) setStartTime(Date.now())
 
     const numWords = currentPrompt.split(' ').length
@@ -117,6 +114,7 @@ export default function TypingForm() {
             maxLength={15}
             onChange={handleKeyDown}
             ref={formRef}
+            autoComplete="off"
             autoFocus
           ></input>
         </div>

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
+@import '../../Constants/constants';
 
 #keyboard-outer-container {
   display: flex;
@@ -40,11 +40,11 @@
 
 .key-highlight-true {
   @include key;
-  background-color: #9ee493;
+  background-color: $themeGreen;
 }
 
 .key {
   font-family: 'Prompt', sans-serif;
   font-size: 30px;
-  color: #9ee493;
+  color: $themeGreen;
 }

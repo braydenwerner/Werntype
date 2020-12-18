@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
+@import '../../Constants/constants';
 
 #typingForm-outer-container {
   display: flex;
@@ -12,7 +13,7 @@
 
   #text-prompt {
     text-align: center;
-    color: #9ee493;
+    color: $themeGreen;
     margin-bottom: 25px;
     span {
       font-family: 'Prompt', sans-serif;
@@ -30,14 +31,14 @@
   }
 
   ::placeholder {
-    color: #336699;
+    color: $themeBlue;
     opacity: 1;
   }
 }
 
 #summaryForm-outer-container {
   text-align: center;
-  color: #9ee493;
+  color: $themeGreen;
 
   #summary-wpm {
     font-family: 'Prompt', sans-serif;

@@ -1,3 +1,5 @@
+@import '../../Constants/constants';
+
 #restart-image {
   background-image: url('../../Image/restart-green.png');
   width: 64px;
@@ -7,4 +9,15 @@
 
 #restart-image:hover {
   background-image: url('../../Image/restart-white.png');
+}
+
+#restart-text {
+  color: white;
+  margin-top: 15px;
+}
+
+key {
+  font-family: 'Prompt', sans-serif;
+  background-color: $themeGreen;
+  padding: 4px;
 }

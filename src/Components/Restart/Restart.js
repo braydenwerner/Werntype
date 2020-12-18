@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { useSetRecoilState, useRecoilState, useRecoilValue } from 'recoil'
 import {
   correctIndexState,
@@ -20,7 +20,18 @@ export default function Restart() {
 
   const [currentPageState, setCurrentPageState] = useRecoilState(pageState)
 
-  const handleClick = () => {
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  })
+
+  const handleKeyDown = (e) => {
+    console.log(e.key)
+    if (e.key === 'Control') restart()
+  }
+
+  const restart = () => {
     setCurrentPrompt(generateText())
     setCurrentWordIndex(0)
     setCurrentWordStartIndex(0)
@@ -33,8 +44,11 @@ export default function Restart() {
     <>
       {(currentPageState === 'typingState' ||
         currentPageState === 'summaryState') && (
-        <div id="restart-image" onClick={handleClick} />
+        <div id="restart-image" onClick={restart} />
       )}
+      <div id="restart-text">
+        Press <key>Cntrl</key> for quick restart
+      </div>
     </>
   )
 }
