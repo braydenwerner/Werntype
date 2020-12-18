@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue } from 'recoil'
 import {
   formState,
   correctIndexState,
@@ -13,9 +13,6 @@ import './TypingForm.scss'
 
 export default function TypingForm() {
   const formRef = useRef(null)
-
-  //  the current ref of the form, needed to reset form with other components
-  const setFormRef = useSetRecoilState(formState)
 
   //  the prompt the user types
   const currentPrompt = useRecoilValue(promptState)
@@ -46,13 +43,16 @@ export default function TypingForm() {
   const [WPM, setWPM] = useState(0)
 
   useEffect(() => {
-    setFormRef(formRef)
-  }, [])
+    formRef.current.value = ''
+  }, [currentPrompt])
 
   //  0 -> currentCorrectIndex is green
   //  currentCorrectIndex + 1 -> currentIndex is red
   //  currentCurrentIndex + 1 -> currentPrompt.length is white
-  const handleKeyDown = (e) => {
+  const handleKeyDown = () => {
+    if (formRef.current.value === 'p') setCurrentPageState('summaryState')
+    console.log('reached')
+
     if (currentIndex === 0) setStartTime(Date.now())
 
     const numWords = currentPrompt.split(' ').length

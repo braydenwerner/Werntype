@@ -1,11 +1,6 @@
 import { atom } from 'recoil'
 import { generateText } from './utils'
 
-export const formState = atom({
-  key: 'formState',
-  default: null
-})
-
 export const promptState = atom({
   key: 'promptState',
   default: generateText()

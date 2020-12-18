@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { useSetRecoilState, useRecoilState, useRecoilValue } from 'recoil'
 import {
-  formState,
   correctIndexState,
   currentIndexState,
   pageState,
@@ -18,7 +17,6 @@ export default function Restart() {
   const setCurrentWordStartIndex = useSetRecoilState(wordStartIndexState)
   const setCurrentCorrectIndex = useSetRecoilState(correctIndexState)
   const setCurrentIndex = useSetRecoilState(currentIndexState)
-  const formValue = useRecoilValue(formState)
 
   const [currentPageState, setCurrentPageState] = useRecoilState(pageState)
 
@@ -29,7 +27,6 @@ export default function Restart() {
     setCurrentCorrectIndex(0)
     setCurrentIndex(0)
     setCurrentPageState('typingState')
-    formValue.current.value = ''
   }
 
   return (
