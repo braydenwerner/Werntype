@@ -1,5 +1,5 @@
 import React from 'react'
-import { Keyboard, TypingForm } from '../../Components/exports'
+import { Keyboard, TypingForm, Restart } from '../../Components/exports'
 import './TypingPage.scss'
 
 export default function TypingPage() {
@@ -7,6 +7,7 @@ export default function TypingPage() {
     <div id="outer-component-container">
       <TypingForm />
       <Keyboard />
+      <Restart />
     </div>
   )
 }

@@ -1,30 +1,40 @@
-import React, { useRef, useState, useEffect } from 'react'
-import { useRecoilState } from 'recoil'
-
-import { pageState } from '../../recoil'
-
-import { generateText } from '../../utils'
-
+import React, { useEffect, useRef, useState } from 'react'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
+import {
+  formState,
+  correctIndexState,
+  currentIndexState,
+  pageState,
+  promptState,
+  wordIndexState,
+  wordStartIndexState
+} from '../../recoil'
 import './TypingForm.scss'
 
 export default function TypingForm() {
-  //  these will be set upon every render but will not update the useState again, maybe there's a better way to declare
   const formRef = useRef(null)
 
+  //  the current ref of the form, needed to reset form with other components
+  const setFormRef = useSetRecoilState(formState)
+
   //  the prompt the user types
-  const [currentPrompt, setCurrentPrompt] = useState(generateText())
+  const currentPrompt = useRecoilValue(promptState)
 
   //  corresponds to the index of each word in currentPrompt.split(" ")
-  const [currentWordIndex, setCurrentWordIndex] = useState(0)
+  const [currentWordIndex, setCurrentWordIndex] = useRecoilState(wordIndexState)
 
   //  the index in currentPrompt where current word starts
-  const [currentWordStartIndex, setCurrentWordStartIndex] = useState(0)
+  const [currentWordStartIndex, setCurrentWordStartIndex] = useRecoilState(
+    wordStartIndexState
+  )
 
   //  the index up to the first incorrect key
-  const [currentCorrectIndex, setCurrentCorrectIndex] = useState(0)
+  const [currentCorrectIndex, setCurrentCorrectIndex] = useRecoilState(
+    correctIndexState
+  )
 
   //  the current index the user is on, including incorrect keys
-  const [currentIndex, setCurrentIndex] = useState(0)
+  const [currentIndex, setCurrentIndex] = useRecoilState(currentIndexState)
 
   //  toggles state and renders components accordingly
   const [currentPageState, setCurrentPageState] = useRecoilState(pageState)
@@ -34,6 +44,10 @@ export default function TypingForm() {
 
   // words per minute the user types
   const [WPM, setWPM] = useState(0)
+
+  useEffect(() => {
+    setFormRef(formRef)
+  }, [])
 
   //  0 -> currentCorrectIndex is green
   //  currentCorrectIndex + 1 -> currentIndex is red
