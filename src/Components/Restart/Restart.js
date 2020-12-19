@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useSetRecoilState, useRecoilState, useRecoilValue } from 'recoil'
+import { useSetRecoilState, useRecoilState } from 'recoil'
 import {
   correctIndexState,
   currentIndexState,
@@ -27,7 +27,6 @@ export default function Restart() {
   })
 
   const handleKeyDown = (e) => {
-    console.log(e.key)
     if (e.key === 'Escape') restart()
   }
 

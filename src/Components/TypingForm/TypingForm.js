@@ -50,6 +50,8 @@ export default function TypingForm() {
   //  currentCorrectIndex + 1 -> currentIndex is red
   //  currentCurrentIndex + 1 -> currentPrompt.length is white
   const handleKeyDown = () => {
+    console.log(process.env.REACT_APP_TEST)
+
     if (currentIndex === 0) setStartTime(Date.now())
 
     const numWords = currentPrompt.split(' ').length
@@ -84,7 +86,8 @@ export default function TypingForm() {
 
     if (currentWordIndex === numWords - 1 && formValue === currentWord) {
       setCurrentPageState('summaryState')
-      setWPM(numWords / ((Date.now() - startTime) / 60000))
+      //  4.7 is the average length of word in English dictionary
+      setWPM(currentCorrectIndex / 4.7 / ((Date.now() - startTime) / 60000))
     }
 
     setCurrentCorrectIndex(totalCorrectIndex)
