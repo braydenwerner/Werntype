@@ -15,8 +15,8 @@ function App() {
       <div id="outer-component-container">
         <TypingForm />
         <Keyboard />
-        <Restart />
         <Profile />
+        <Restart />
       </div>
     </>
   )

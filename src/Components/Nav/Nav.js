@@ -25,11 +25,7 @@ export default function Nav() {
             src={leaderboardImage}
             onClick={handleLeaderBoardClick}
           />
-          <img
-            id="profile-nav-link"
-            src={profileImage}
-            onClick={handleStatsClick}
-          />
+          <img src={profileImage} onClick={handleStatsClick} />
         </div>
       )}
     </>
