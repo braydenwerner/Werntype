@@ -16,6 +16,10 @@
     margin: 25px 25px 25px 25px;
   }
 
+  img:hover {
+    transform: translateY(-3px);
+  }
+
   #leaderboard-nav-link {
     filter: invert(1);
   }
