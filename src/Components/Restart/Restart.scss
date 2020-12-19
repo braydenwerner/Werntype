@@ -5,6 +5,10 @@
   width: 64px;
   height: 64px;
   margin-top: 25px;
+
+  @media (max-height: 600px) {
+    display: none;
+  }
 }
 
 #restart-image:hover {

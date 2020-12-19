@@ -6,6 +6,10 @@
   width: 100%;
   justify-content: center;
 
+  @media (max-height: 690px) {
+    display: none;
+  }
+
   img {
     width: 32px;
     height: 32px;
