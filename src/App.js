@@ -1,14 +1,24 @@
 import React from 'react'
-import { TypingForm, Keyboard, Restart } from './Components/exports'
+import {
+  TypingForm,
+  Keyboard,
+  Restart,
+  Nav,
+  Profile
+} from './Components/exports'
 import './App.scss'
 
 function App() {
   return (
-    <div id="outer-component-container">
-      <TypingForm />
-      <Keyboard />
-      <Restart />
-    </div>
+    <>
+      <Nav />
+      <div id="outer-component-container">
+        <TypingForm />
+        <Keyboard />
+        <Restart />
+        <Profile />
+      </div>
+    </>
   )
 }
 

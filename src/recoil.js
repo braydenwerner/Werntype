@@ -30,3 +30,8 @@ export const pageState = atom({
   key: 'pageState',
   default: 'typingState'
 })
+
+export const wpmState = atom({
+  key: 'wpmState',
+  default: 0
+})

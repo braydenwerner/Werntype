@@ -1,0 +1,25 @@
+@import '../../Constants/constants';
+
+#outer-nav-container {
+  position: absolute;
+  display: flex;
+  width: 100%;
+
+  #leaderboard-nav-link {
+    background-image: url('../../Image/leaderboard-white.png');
+    position: relative;
+    left: 95%;
+    width: 50px;
+  }
+
+  #leaderboard-nav-link:hover {
+  }
+
+  #profile-nav-link {
+    background-image: url('../../Image/profile-white.png');
+    width: 50px;
+  }
+
+  #profile-nav-link:hover {
+  }
+}

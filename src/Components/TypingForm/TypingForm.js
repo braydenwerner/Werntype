@@ -6,7 +6,8 @@ import {
   pageState,
   promptState,
   wordIndexState,
-  wordStartIndexState
+  wordStartIndexState,
+  wpmState
 } from '../../recoil'
 import './TypingForm.scss'
 
@@ -35,11 +36,11 @@ export default function TypingForm() {
   //  toggles state and renders components accordingly
   const [currentPageState, setCurrentPageState] = useRecoilState(pageState)
 
+  // words per minute the user types
+  const [WPM, setWPM] = useRecoilState(wpmState)
+
   //  starting time when first key is typed
   const [startTime, setStartTime] = useState(0)
-
-  // words per minute the user types
-  const [WPM, setWPM] = useState(0)
 
   //  if the prompt is changed, reset the form
   useEffect(() => {
@@ -50,8 +51,6 @@ export default function TypingForm() {
   //  currentCorrectIndex + 1 -> currentIndex is red
   //  currentCurrentIndex + 1 -> currentPrompt.length is white
   const handleKeyDown = () => {
-    console.log(process.env.REACT_APP_TEST)
-
     if (currentIndex === 0) setStartTime(Date.now())
 
     const numWords = currentPrompt.split(' ').length
@@ -85,9 +84,13 @@ export default function TypingForm() {
     }
 
     if (currentWordIndex === numWords - 1 && formValue === currentWord) {
-      setCurrentPageState('summaryState')
       //  4.7 is the average length of word in English dictionary
-      setWPM(currentCorrectIndex / 4.7 / ((Date.now() - startTime) / 60000))
+      setWPM(
+        Math.floor(
+          currentCorrectIndex / 4.7 / ((Date.now() - startTime) / 60000)
+        )
+      )
+      setCurrentPageState('summaryState')
     }
 
     setCurrentCorrectIndex(totalCorrectIndex)
