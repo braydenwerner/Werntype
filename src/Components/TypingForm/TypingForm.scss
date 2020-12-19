@@ -16,8 +16,11 @@
     color: $themeGreen;
     margin-bottom: 25px;
     span {
-      font-family: 'Prompt', sans-serif;
       font-size: 30px;
+      @media (max-width: 950px) {
+        font-size: 20px;
+      }
+      font-family: 'Prompt', sans-serif;
     }
   }
 

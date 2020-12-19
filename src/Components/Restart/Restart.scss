@@ -12,13 +12,16 @@
 }
 
 #restart-text {
+  display: flex;
+  align-items: center;
   color: WHITE;
   margin-top: 25px;
-}
 
-key {
-  font-family: 'Prompt', sans-serif;
-  background-color: $themeGreen;
-  color: $themeBlue;
-  padding: 4px;
+  #escape-key {
+    font-family: 'Prompt', sans-serif;
+    background-color: $themeGreen;
+    color: $themeBlue;
+    padding: 4px;
+    margin: 0px 8px 0px 8px;
+  }
 }

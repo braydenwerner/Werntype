@@ -17,7 +17,6 @@
 }
 
 @mixin key {
-  font-size: 40px;
   margin: 5px 5px 5px 5px;
   display: flex;
   border-radius: 5px;
@@ -36,15 +35,27 @@
 .key-highlight-false {
   @include key;
   background-color: none;
+
+  @media (max-width: 950px) {
+    margin: 3px 3px 3px 3px;
+  }
 }
 
 .key-highlight-true {
   @include key;
   background-color: $themeGreen;
+
+  @media (max-width: 950px) {
+    margin: 3px 3px 3px 3px;
+  }
 }
 
 .key {
   font-family: 'Prompt', sans-serif;
   font-size: 30px;
   color: $themeGreen;
+
+  @media (max-width: 950px) {
+    font-size: 20px;
+  }
 }

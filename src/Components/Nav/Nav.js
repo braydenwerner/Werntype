@@ -1,6 +1,8 @@
 import React from 'react'
 import { useRecoilState } from 'recoil'
 import { pageState } from '../../recoil'
+import leaderboardImage from '../../Image/leaderboard-white.png'
+import profileImage from '../../Image/profile-white.png'
 import './Nav.scss'
 
 export default function Nav() {
@@ -18,8 +20,16 @@ export default function Nav() {
     <>
       {currentPageState !== 'animationState' && (
         <div id="outer-nav-container">
-          <div id="leaderboard-nav-link" onClick={handleLeaderBoardClick} />
-          <div id="profile-nav-link" onClick={handleStatsClick} />
+          <img
+            id="leaderboard-nav-link"
+            src={leaderboardImage}
+            onClick={handleLeaderBoardClick}
+          />
+          <img
+            id="profile-nav-link"
+            src={profileImage}
+            onClick={handleStatsClick}
+          />
         </div>
       )}
     </>

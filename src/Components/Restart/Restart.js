@@ -46,7 +46,7 @@ export default function Restart() {
         <div id="restart-image" onClick={restart} />
       )}
       <div id="restart-text">
-        Press <key>Escape</key> for quick restart
+        Press <div id="escape-key">Escape</div> for quick restart
       </div>
     </>
   )
