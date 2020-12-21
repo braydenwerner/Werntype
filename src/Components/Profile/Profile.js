@@ -3,6 +3,7 @@ import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
 import { pageState, signedInState } from '../../recoil'
 import { app, auth, db } from '../../firebase'
 import './Profile.scss'
+import AnimatedHeader from '../AnimatedHeader/AnimatedHeader'
 
 export default function Profile() {
   const signinRefEmail = useRef(null)
@@ -16,35 +17,49 @@ export default function Profile() {
   const [errorMessage, setErrorMessage] = useState('')
   const [docData, setDocData] = useState({})
 
-  const signin = (e) => {
+  const signIn = (e) => {
     e.preventDefault()
-    console.log('signin')
     auth
       .signInWithEmailAndPassword(
         signinRefEmail.current.value,
         signinRefPassword.current.value
       )
       .catch((error) => {
-        const errorMessage = error.message
-        setErrorMessage(errorMessage)
+        setErrorMessage(error.message)
       })
   }
 
-  const signup = (e) => {
+  //  sign up, add defaul values to database
+  const signUp = (e) => {
     e.preventDefault()
-    console.log('signup')
+    const email = signupRefEmail.current.value
 
     auth
-      .createUserWithEmailAndPassword(
-        signupRefEmail.current.value,
-        signupRefPassword.current.value
-      )
+      .createUserWithEmailAndPassword(email, signupRefPassword.current.value)
+      .then(() => {
+        db.collection('users')
+          .doc(email)
+          .set({
+            email: email,
+            bestWPM: 0,
+            avgWPM: 0
+          })
+          .catch((error) => {
+            setErrorMessage(error.message)
+          })
+      })
       .catch((error) => {
-        const errorMessage = error.message
-        setErrorMessage(errorMessage)
+        setErrorMessage(error.message)
       })
   }
 
+  const signOut = () => {
+    auth.signOut().catch((error) => {
+      setErrorMessage(error.message)
+    })
+  }
+
+  //  detects sign in, sign out. retrieves data and runs setDocData() to render
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -62,8 +77,8 @@ export default function Profile() {
               })
             }
           })
-          .catch(function (error) {
-            console.log('Error getting document:', error)
+          .catch((error) => {
+            setErrorMessage(error.message)
           })
       } else {
         setSignedIn(false)
@@ -78,9 +93,11 @@ export default function Profile() {
         <div id="outer-stats-container">
           {errorMessage === '' && signedIn && (
             <div id="inner-stats-container">
+              <AnimatedHeader text="Profile" />
               <h1>{docData.email}</h1>
               <h2>Average WPM (All time): {docData.avgWPM}</h2>
               <h2>Fastest Race: {docData.bestWPM}</h2>
+              <button onClick={signOut}>Sign out</button>
             </div>
           )}
           {!signedIn && (
@@ -98,7 +115,7 @@ export default function Profile() {
                   required
                   ref={signinRefPassword}
                 />
-                <button type="login-input-button" onClick={signin}>
+                <button type="login-input-button" onClick={signIn}>
                   Login
                 </button>
               </form>
@@ -116,7 +133,7 @@ export default function Profile() {
                   required
                   ref={signupRefPassword}
                 />
-                <button type="submit" onClick={signup}>
+                <button type="submit" onClick={signUp}>
                   Sign Up
                 </button>
               </form>

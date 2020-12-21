@@ -11,15 +11,13 @@ import './App.scss'
 //  includes main page components and absolute position components
 function App() {
   return (
-    <>
+    <div id="component-container">
       <Nav />
-      <div id="component-container">
-        <TypingForm />
-        <Keyboard />
-        <Profile />
-        <Restart />
-      </div>
-    </>
+      <TypingForm />
+      <Keyboard />
+      <Profile />
+      <Restart />
+    </div>
   )
 }
 

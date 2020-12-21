@@ -40,8 +40,3 @@ export const signedInState = atom({
   key: 'signedInState',
   default: false
 })
-
-export const userStatsState = atom({
-  key: 'userStatsState',
-  default: {}
-})

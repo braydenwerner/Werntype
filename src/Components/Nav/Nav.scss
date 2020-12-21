@@ -3,23 +3,27 @@
 #outer-nav-container {
   position: absolute;
   display: flex;
-  width: 100%;
   justify-content: center;
+  top: 5%;
 
   @media (max-height: 690px) {
     display: none;
   }
 
   img {
+    position: relative;
+    right: 16px;
     width: 32px;
     height: 32px;
     margin: 25px 25px 25px 25px;
   }
 
   img:hover {
+    transform: translateX(-16px);
     transform: translateY(-3px);
   }
 
+  #home-nav-link,
   #leaderboard-nav-link {
     filter: invert(1);
   }
