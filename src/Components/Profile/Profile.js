@@ -1,30 +1,44 @@
-import React, { useState, useEffect } from 'react'
-import { useRecoilValue, useRecoilState } from 'recoil'
+import React, { useRef, useState, useEffect } from 'react'
+import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
 import { pageState, signedInState } from '../../recoil'
-import { app, auth, provider } from '../../firebase'
+import { app, auth, db } from '../../firebase'
 import './Profile.scss'
 
 export default function Profile() {
+  const signinRefEmail = useRef(null)
+  const signinRefPassword = useRef(null)
+  const signupRefEmail = useRef(null)
+  const signupRefPassword = useRef(null)
+
   const currentPageState = useRecoilValue(pageState)
   const [signedIn, setSignedIn] = useRecoilState(signedInState)
-  const [errorMessage, setErrorMessage] = useState('')
 
-  const createAccount = (email, password) => {
+  const [errorMessage, setErrorMessage] = useState('')
+  const [docData, setDocData] = useState({})
+
+  const signin = (e) => {
+    e.preventDefault()
+    console.log('signin')
     auth
-      .createUserWithEmailAndPassword('email54@gmail.com', 'password')
-      .then((user) => {
-        setErrorMessage('')
-      })
+      .signInWithEmailAndPassword(
+        signinRefEmail.current.value,
+        signinRefPassword.current.value
+      )
       .catch((error) => {
         const errorMessage = error.message
         setErrorMessage(errorMessage)
       })
   }
 
-  const login = (email, password) => {
+  const signup = (e) => {
+    e.preventDefault()
+    console.log('signup')
+
     auth
-      .signInWithEmailAndPassword(email, password)
-      .then((user) => {})
+      .createUserWithEmailAndPassword(
+        signupRefEmail.current.value,
+        signupRefPassword.current.value
+      )
       .catch((error) => {
         const errorMessage = error.message
         setErrorMessage(errorMessage)
@@ -34,12 +48,25 @@ export default function Profile() {
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       if (user) {
-        const email = user.email
-        console.log('email: ', email, ' just logged on')
+        setErrorMessage('')
         setSignedIn(true)
+
+        const docRef = db.collection('users').doc(user.email)
+        docRef
+          .get()
+          .then(function (doc) {
+            if (doc.exists) {
+              setDocData({
+                email: user.email,
+                ...doc.data()
+              })
+            }
+          })
+          .catch(function (error) {
+            console.log('Error getting document:', error)
+          })
       } else {
         setSignedIn(false)
-        console.log('user signed out')
       }
     })
   }, [])
@@ -51,22 +78,47 @@ export default function Profile() {
         <div id="outer-stats-container">
           {errorMessage === '' && signedIn && (
             <div id="inner-stats-container">
-              <div>Average WPM (All time)</div>
-              <div>Fastest Race</div>
+              <h1>{docData.email}</h1>
+              <h2>Average WPM (All time): {docData.avgWPM}</h2>
+              <h2>Fastest Race: {docData.bestWPM}</h2>
             </div>
           )}
           {!signedIn && (
-            <div id="outer-form-login">
-              <form id="login-container">
-                <input type="text" placeholder="username" required />
-                <input type="text" placeholder="password" required />
-                <button type="login-input-button">Login</button>
+            <div id="outer-form-signin">
+              <form id="signin-container">
+                <input
+                  type="text"
+                  placeholder="email"
+                  required
+                  ref={signinRefEmail}
+                />
+                <input
+                  type="text"
+                  placeholder="password"
+                  required
+                  ref={signinRefPassword}
+                />
+                <button type="login-input-button" onClick={signin}>
+                  Login
+                </button>
               </form>
 
               <form id="signup-container">
-                <input type="text" placeholder="username" required />
-                <input type="text" placeholder="password" required />
-                <button type="submit">Sign Up</button>
+                <input
+                  type="text"
+                  placeholder="email"
+                  required
+                  ref={signupRefEmail}
+                />
+                <input
+                  type="text"
+                  placeholder="password"
+                  required
+                  ref={signupRefPassword}
+                />
+                <button type="submit" onClick={signup}>
+                  Sign Up
+                </button>
               </form>
               <div id="error-container">
                 {errorMessage !== '' && (

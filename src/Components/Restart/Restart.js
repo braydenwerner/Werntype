@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useSetRecoilState, useRecoilState } from 'recoil'
+import { useSetRecoilState, useRecoilState, useRecoilValue } from 'recoil'
 import {
   correctIndexState,
   currentIndexState,
@@ -18,7 +18,7 @@ export default function Restart() {
   const setCurrentCorrectIndex = useSetRecoilState(correctIndexState)
   const setCurrentIndex = useSetRecoilState(currentIndexState)
 
-  const [currentPageState, setCurrentPageState] = useRecoilState(pageState)
+  const setCurrentPageState = useSetRecoilState(pageState)
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown)
