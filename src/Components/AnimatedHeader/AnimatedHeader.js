@@ -7,6 +7,7 @@ export default function AnimatedHeader({ text }) {
   const [currentString, updateCurrentString] = useState('')
   const [currentStringIndex, updateStringIndex] = useState(0)
 
+  // if there are other dependencies causing re-render, this will not work
   let count = 0
   let delayCount = 0
   let delay = false
