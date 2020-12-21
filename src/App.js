@@ -8,11 +8,12 @@ import {
 } from './Components/exports'
 import './App.scss'
 
+//  includes main page components and absolute position components
 function App() {
   return (
     <>
       <Nav />
-      <div id="outer-component-container">
+      <div id="component-container">
         <TypingForm />
         <Keyboard />
         <Profile />

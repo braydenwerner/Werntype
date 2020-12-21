@@ -1,31 +1,43 @@
 @import '../../Constants/constants';
 
-#restart-image {
-  background-image: url('../../Image/restart-green.png');
-  width: 64px;
-  height: 64px;
-  margin-top: 25px;
-
-  @media (max-height: 600px) {
-    display: none;
-  }
-}
-
-#restart-image:hover {
-  background-image: url('../../Image/restart-white.png');
-}
-
-#restart-text {
+#inner-restart-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  color: WHITE;
-  margin-top: 25px;
+  position: absolute;
+  bottom: 10%;
 
-  #escape-key {
-    font-family: 'Prompt', sans-serif;
-    background-color: $themeGreen;
-    color: $themeBlue;
-    padding: 4px;
-    margin: 0px 8px 0px 8px;
+  #restart-image {
+    background-image: url('../../Image/restart-green.png');
+    width: 64px;
+    height: 64px;
+    margin-top: 25px;
+
+    @media (max-height: 740px) {
+      display: none;
+    }
+  }
+
+  #restart-image:hover {
+    background-image: url('../../Image/restart-white.png');
+  }
+
+  #restart-text {
+    display: flex;
+    align-items: center;
+    color: WHITE;
+    margin-top: 25px;
+
+    @media (max-height: 500px) {
+      display: none;
+    }
+
+    #escape-key {
+      font-family: $mainFont;
+      background-color: $themeGreen;
+      color: $themeBlue;
+      padding: 4px;
+      margin: 0px 8px 0px 8px;
+    }
   }
 }

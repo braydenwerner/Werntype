@@ -1,0 +1,70 @@
+@import '../../Constants/constants';
+
+#outer-profile-container {
+  display: flex;
+  flex-direction: column;
+
+  width: 800px;
+  text-align: center;
+
+  @media (max-width: 850px) {
+    width: 80%;
+  }
+
+  #outer-stats-container {
+    #outer-form-login {
+      display: flex;
+      flex-direction: row;
+
+      @media (max-width: 550px) {
+        flex-direction: column;
+      }
+
+      #login-container,
+      #signup-container {
+        display: flex;
+        flex-direction: column;
+        width: 50%;
+        align-items: center;
+
+        @media (max-width: 550px) {
+          width: 100%;
+        }
+
+        ::placeholder {
+          color: $themeGreen;
+        }
+
+        input {
+          font-size: 15px;
+          box-sizing: border-box;
+          width: 50%;
+          background-color: $themeBlue;
+          outline: none;
+          margin: 5px 5px 5px 5px;
+          padding: 7px;
+          font-family: $mainFont;
+          border: none;
+          border-radius: 10px;
+        }
+
+        button {
+          font-size: 15px;
+          width: 50%;
+          background-color: $themeBlue;
+          border: none;
+          outline: none;
+          margin: 5px 5px 5px 5px;
+          padding: 5px;
+          font-family: $mainFont;
+          font-weight: 600;
+          border-radius: 7px;
+        }
+
+        button:hover {
+          background-color: WHITE;
+        }
+      }
+    }
+  }
+}

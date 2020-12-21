@@ -41,12 +41,11 @@ export default function Restart() {
 
   return (
     <>
-      {(currentPageState === 'typingState' ||
-        currentPageState === 'summaryState') && (
+      <div id="inner-restart-container">
         <div id="restart-image" onClick={restart} />
-      )}
-      <div id="restart-text">
-        Press <div id="escape-key">Escape</div> for quick restart
+        <div id="restart-text">
+          Press <div id="escape-key">Escape</div> for quick restart
+        </div>
       </div>
     </>
   )

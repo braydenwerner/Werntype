@@ -35,3 +35,8 @@ export const wpmState = atom({
   key: 'wpmState',
   default: 0
 })
+
+export const signedInState = atom({
+  key: 'signedInState',
+  default: false
+})
