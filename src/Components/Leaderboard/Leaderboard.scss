@@ -1,0 +1,16 @@
+@import '../../Constants/constants.scss';
+
+#leaderboard-outer-container {
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+
+  #leaderboard-inner-container {
+    display: flex;
+    justify-content: center;
+
+    div {
+      margin: 10px 10px 10px 10px;
+    }
+  }
+}

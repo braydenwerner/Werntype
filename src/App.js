@@ -4,7 +4,8 @@ import {
   Keyboard,
   Restart,
   Nav,
-  Profile
+  Profile,
+  Leaderboard
 } from './Components/exports'
 import './App.scss'
 
@@ -15,6 +16,7 @@ function App() {
       <Nav />
       <TypingForm />
       <Keyboard />
+      <Leaderboard />
       <Profile />
       <Restart />
     </div>
