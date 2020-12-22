@@ -9,6 +9,7 @@ export default function Profile() {
   const signinRefEmail = useRef(null)
   const signinRefPassword = useRef(null)
   const signupRefEmail = useRef(null)
+  const signupRefUsername = useRef(null)
   const signupRefPassword = useRef(null)
 
   const currentPageState = useRecoilValue(pageState)
@@ -25,7 +26,7 @@ export default function Profile() {
         signinRefPassword.current.value
       )
       .catch((error) => {
-        setErrorMessage(error.message)
+        handleError(error.message)
       })
   }
 
@@ -33,29 +34,51 @@ export default function Profile() {
   const signUp = (e) => {
     e.preventDefault()
     const email = signupRefEmail.current.value
+    const username = signupRefUsername.current.value
+    const password = signupRefPassword.current.value
 
-    auth
-      .createUserWithEmailAndPassword(email, signupRefPassword.current.value)
-      .then(() => {
-        db.collection('users')
-          .doc(email)
-          .set({
-            email: email,
-            bestWPM: 0,
-            avgWPM: 0
-          })
-          .catch((error) => {
-            setErrorMessage(error.message)
-          })
+    //  check to make sure username not already in database
+    db.collection('users')
+      .where('username', '==', username)
+      .get()
+      .then((querySnapshot) => {
+        if (querySnapshot.size === 0) {
+          auth
+            .createUserWithEmailAndPassword(email, password)
+            .then(() => {
+              db.collection('users')
+                .doc(email)
+                .set({
+                  email: email,
+                  username: username,
+                  bestWPM: 0,
+                  avgWPM: 0
+                })
+                .catch((error) => {
+                  handleError(error.message)
+                })
+            })
+            .catch((error) => {
+              handleError(error.message)
+            })
+        } else {
+          handleError('Username already exists')
+        }
       })
-      .catch((error) => {
-        setErrorMessage(error.message)
+      .catch(function (error) {
+        handleError(error.message)
       })
+  }
+
+  const handleError = (error) => {
+    setErrorMessage(error)
+    const unsetErrorInterval = setInterval(() => setErrorMessage(' '), 5000)
+    setTimeout(() => clearInterval(unsetErrorInterval), 5000)
   }
 
   const signOut = () => {
     auth.signOut().catch((error) => {
-      setErrorMessage(error.message)
+      handleError(error.message)
     })
   }
 
@@ -69,7 +92,7 @@ export default function Profile() {
         const docRef = db.collection('users').doc(user.email)
         docRef
           .get()
-          .then(function (doc) {
+          .then((doc) => {
             if (doc.exists) {
               setDocData({
                 email: user.email,
@@ -78,7 +101,7 @@ export default function Profile() {
             }
           })
           .catch((error) => {
-            setErrorMessage(error.message)
+            handleError(error.message)
           })
       } else {
         setSignedIn(false)
@@ -94,58 +117,75 @@ export default function Profile() {
           {errorMessage === '' && signedIn && (
             <div id="inner-stats-container">
               <AnimatedHeader text="Profile" />
-              <h1>{docData.email}</h1>
-              <h2>Average WPM (All time): {docData.avgWPM}</h2>
-              <h2>Fastest Race: {docData.bestWPM}</h2>
+              <h1>{docData.username}</h1>
+              <div id="inner-stats-row">
+                <h2>Average WPM</h2>
+                <div className="stat-box">{docData.avgWPM} WPM</div>
+                <h2>Fastest WPM</h2>
+                <div className="stat-box">{docData.bestWPM} WPM</div>
+                <h2>Last WPM</h2>
+                <div className="stat-box">{docData.lastWPM} WPM</div>
+                <h2>Total Races</h2>
+                <div className="stat-box">{docData.totalRaces}</div>
+              </div>
               <button onClick={signOut}>Sign out</button>
             </div>
           )}
           {!signedIn && (
-            <div id="outer-form-signin">
-              <form id="signin-container">
-                <input
-                  type="text"
-                  placeholder="email"
-                  required
-                  ref={signinRefEmail}
-                />
-                <input
-                  type="text"
-                  placeholder="password"
-                  required
-                  ref={signinRefPassword}
-                />
-                <button type="login-input-button" onClick={signIn}>
-                  Login
-                </button>
-              </form>
+            <div id="outer-signin-container">
+              <AnimatedHeader text="Sign In To See Profile" />
+              <div id="outer-form-signin">
+                <form id="signin-container">
+                  <input
+                    type="text"
+                    placeholder="email"
+                    required
+                    ref={signinRefEmail}
+                  />
+                  <input
+                    type="text"
+                    placeholder="password"
+                    required
+                    ref={signinRefPassword}
+                  />
+                  <button type="login-input-button" onClick={signIn}>
+                    Login
+                  </button>
+                </form>
 
-              <form id="signup-container">
-                <input
-                  type="text"
-                  placeholder="email"
-                  required
-                  ref={signupRefEmail}
-                />
-                <input
-                  type="text"
-                  placeholder="password"
-                  required
-                  ref={signupRefPassword}
-                />
-                <button type="submit" onClick={signUp}>
-                  Sign Up
-                </button>
-              </form>
-              <div id="error-container">
-                {errorMessage !== '' && (
-                  <div id="error-message">{errorMessage}</div>
-                )}
+                <form id="signup-container">
+                  <input
+                    type="text"
+                    placeholder="email"
+                    required
+                    ref={signupRefEmail}
+                  />
+                  <input
+                    type="text"
+                    placeholder="username"
+                    required
+                    ref={signupRefUsername}
+                  />
+                  <input
+                    type="text"
+                    placeholder="password"
+                    required
+                    ref={signupRefPassword}
+                  />
+                  <button type="submit" onClick={signUp}>
+                    Sign Up
+                  </button>
+                </form>
               </div>
             </div>
           )}
         </div>
       )}
+      <div id="error-container">
+        {errorMessage !== '' && currentPageState === 'profileState' && (
+          <div id="error-message">{errorMessage}</div>
+        )}
+      </div>
     </div>
   )
 }

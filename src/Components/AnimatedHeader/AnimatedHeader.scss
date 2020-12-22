@@ -1,7 +1,36 @@
 @import '../../Constants/constants';
 
-#animated-header {
-  font-family: $mainFont;
-  font-size: 60px;
-  color: $themeGreen;
+#animated-header-container {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+
+  @media (max-height: 630px) {
+    display: none;
+  }
+
+  #animated-header,
+  #animated-header-cursor {
+    font-family: $mainHeaderFont;
+    font-size: 50px;
+    color: $themeGreen;
+
+    @media (max-width: 830px) {
+      font-size: 30px;
+    }
+
+    @media (max-width: 420px) {
+      font-size: 20px;
+    }
+  }
+
+  #animated-header-cursor {
+    animation: blink 1s linear infinite;
+  }
+
+  @keyframes blink {
+    50% {
+      opacity: 0;
+    }
+  }
 }

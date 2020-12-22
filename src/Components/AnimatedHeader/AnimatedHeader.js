@@ -7,6 +7,10 @@ export default function AnimatedHeader({ text }) {
   const [currentString, updateCurrentString] = useState('')
   const [currentStringIndex, updateStringIndex] = useState(0)
 
+  //  temp letter is necessary to the page doesnt jump when currentString is first init
+  //  set temp letter to nothing once currentString has something rendered
+  const [tempLetter, setTempLetter] = useState('_')
+
   // if there are other dependencies causing re-render, this will not work
   let count = 0
   let delayCount = 0
@@ -22,6 +26,7 @@ export default function AnimatedHeader({ text }) {
   }, [])
 
   const animateStringText = () => {
+    setTempLetter('')
     if (delay) delayCount++
 
     if (delayCount > delayCooldown) {
@@ -44,11 +49,19 @@ export default function AnimatedHeader({ text }) {
       }
 
       updateStringIndex(currentStringIndex)
-      updateCurrentString(text.substring(0, count) + '_')
+      updateCurrentString(text.substring(0, count))
     }
   }
 
-  return <div id="animated-header">{currentString}</div>
+  return (
+    <div id="animated-header-container">
+      <div id="animated-header">
+        {tempLetter}
+        {currentString}
+      </div>
+      <span id="animated-header-cursor">_</span>
+    </div>
+  )
 }
 
 AnimatedHeader.propTypes = {
