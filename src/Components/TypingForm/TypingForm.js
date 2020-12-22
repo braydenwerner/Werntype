@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { db } from '../../firebase'
 import {
   correctIndexState,
   currentIndexState,
@@ -7,7 +8,9 @@ import {
   promptState,
   wordIndexState,
   wordStartIndexState,
-  wpmState
+  wpmState,
+  signedInState,
+  docDataState
 } from '../../recoil'
 import './TypingForm.scss'
 
@@ -41,6 +44,10 @@ export default function TypingForm() {
 
   //  starting time when first key is typed
   const [startTime, setStartTime] = useState(0)
+
+  const signedIn = useRecoilValue(signedInState)
+
+  const [docData, setDocData] = useRecoilState(docDataState)
 
   //  if the prompt is changed, reset the form
   useEffect(() => {
@@ -90,6 +97,51 @@ export default function TypingForm() {
           currentCorrectIndex / 4.7 / ((Date.now() - startTime) / 60000)
         )
       )
+
+      //  update user's stats
+      if (signedIn) {
+        //  get all data from database
+
+        const avgWPM = docData.avgWPM
+        const bestWPM = docData.bestWPM
+        const email = docData.email
+        const totalRaces = docData.totalRaces
+        const username = docData.username
+        const totalPoints = docData.totalPoints
+
+        const tempWPM = Math.floor(
+          currentCorrectIndex / 4.7 / ((Date.now() - startTime) / 60000)
+        )
+
+        console.log(docData)
+        console.log(tempWPM)
+        console.log(avgWPM)
+        console.log(totalRaces)
+        console.log(totalPoints)
+
+        //  store the new data
+        const newData = {
+          email: email,
+          avgWPM: Math.floor((totalPoints + tempWPM) / (totalRaces + 1)),
+          bestWPM: tempWPM > bestWPM ? tempWPM : bestWPM,
+          lastWPM: tempWPM,
+          totalRaces: totalRaces + 1,
+          totalPoints: totalPoints + tempWPM,
+          username: username
+        }
+
+        //  set doc data so it gets rendered on profile
+        setDocData(newData)
+        db.collection('users')
+          .doc(email)
+          .set({
+            ...newData
+          })
+          .catch((error) => {
+            console.log(error.message)
+          })
+      }
+
       setCurrentPageState('summaryState')
     }
 

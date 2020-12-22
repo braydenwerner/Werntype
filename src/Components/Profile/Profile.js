@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
-import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
-import { pageState, signedInState } from '../../recoil'
+import { useRecoilValue, useRecoilState } from 'recoil'
+import { pageState, signedInState, docDataState } from '../../recoil'
 import { app, auth, db } from '../../firebase'
 import './Profile.scss'
 import AnimatedHeader from '../AnimatedHeader/AnimatedHeader'
@@ -14,9 +14,9 @@ export default function Profile() {
 
   const currentPageState = useRecoilValue(pageState)
   const [signedIn, setSignedIn] = useRecoilState(signedInState)
+  const [docData, setDocData] = useRecoilState(docDataState)
 
   const [errorMessage, setErrorMessage] = useState('')
-  const [docData, setDocData] = useState({})
 
   const signIn = (e) => {
     e.preventDefault()
@@ -52,7 +52,9 @@ export default function Profile() {
                   email: email,
                   username: username,
                   bestWPM: 0,
-                  avgWPM: 0
+                  avgWPM: 0,
+                  lastWPM: 0,
+                  totalRaces: 0
                 })
                 .catch((error) => {
                   handleError(error.message)
@@ -65,7 +67,7 @@ export default function Profile() {
           handleError('Username already exists')
         }
       })
-      .catch(function (error) {
+      .catch((error) => {
         handleError(error.message)
       })
   }
@@ -120,11 +122,11 @@ export default function Profile() {
               <h1>{docData.username}</h1>
               <div id="inner-stats-row">
                 <h2>Average WPM</h2>
-                <div className="stat-box">{docData.avgWPM} WPM</div>
+                <div className="stat-box">{docData.avgWPM}</div>
                 <h2>Fastest WPM</h2>
-                <div className="stat-box">{docData.bestWPM} WPM</div>
+                <div className="stat-box">{docData.bestWPM}</div>
                 <h2>Last WPM</h2>
-                <div className="stat-box">{docData.lastWPM} WPM</div>
+                <div className="stat-box">{docData.lastWPM}</div>
                 <h2>Total Races</h2>
                 <div className="stat-box">{docData.totalRaces}</div>
               </div>
