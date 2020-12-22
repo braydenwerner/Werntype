@@ -42,12 +42,14 @@ export default function TypingForm() {
   // words per minute the user types
   const [WPM, setWPM] = useRecoilState(wpmState)
 
+  //  get and set data for user
+  const [docData, setDocData] = useRecoilState(docDataState)
+
   //  starting time when first key is typed
   const [startTime, setStartTime] = useState(0)
 
+  //  whether the user is signed in or not
   const signedIn = useRecoilValue(signedInState)
-
-  const [docData, setDocData] = useRecoilState(docDataState)
 
   //  if the prompt is changed, reset the form
   useEffect(() => {
@@ -100,33 +102,25 @@ export default function TypingForm() {
 
       //  update user's stats
       if (signedIn) {
-        //  get all data from database
-
         const avgWPM = docData.avgWPM
         const bestWPM = docData.bestWPM
         const email = docData.email
         const totalRaces = docData.totalRaces
         const username = docData.username
-        const totalPoints = docData.totalPoints
+        const points = docData.points
 
         const tempWPM = Math.floor(
           currentCorrectIndex / 4.7 / ((Date.now() - startTime) / 60000)
         )
 
-        console.log(docData)
-        console.log(tempWPM)
-        console.log(avgWPM)
-        console.log(totalRaces)
-        console.log(totalPoints)
-
         //  store the new data
         const newData = {
           email: email,
-          avgWPM: Math.floor((totalPoints + tempWPM) / (totalRaces + 1)),
+          avgWPM: Math.floor((points + tempWPM) / (totalRaces + 1)),
           bestWPM: tempWPM > bestWPM ? tempWPM : bestWPM,
           lastWPM: tempWPM,
           totalRaces: totalRaces + 1,
-          totalPoints: totalPoints + tempWPM,
+          points: points + tempWPM,
           username: username
         }
 
@@ -173,6 +167,7 @@ export default function TypingForm() {
             onChange={handleKeyDown}
             ref={formRef}
             autoComplete="off"
+            autoCapitalize="none"
             autoFocus
           ></input>
         </div>

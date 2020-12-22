@@ -55,7 +55,7 @@ export default function Profile() {
                   avgWPM: 0,
                   lastWPM: 0,
                   totalRaces: 0,
-                  totalPoints: 0
+                  points: 0
                 })
                 .catch((error) => {
                   handleError(error.message)

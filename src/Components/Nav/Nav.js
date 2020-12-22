@@ -9,9 +9,7 @@ import {
   pageState
 } from '../../atoms/recoil'
 import { generateText } from '../../util/utils'
-import homeImage from '../../Image/home.png'
-import leaderboardImage from '../../Image/leaderboard-white.png'
-import profileImage from '../../Image/profile-white.png'
+import images from '../../Image/exports'
 import './Nav.scss'
 
 export default function Nav() {
@@ -23,14 +21,6 @@ export default function Nav() {
 
   const [currentPageState, setCurrentPageState] = useRecoilState(pageState)
 
-  const handleLeaderBoardClick = () => {
-    setCurrentPageState('leaderboardState')
-  }
-
-  const handleStatsClick = () => {
-    setCurrentPageState('profileState')
-  }
-
   const handleHomeClick = () => {
     setCurrentPrompt(generateText())
     setCurrentWordIndex(0)
@@ -40,17 +30,42 @@ export default function Nav() {
     setCurrentPageState('typingState')
   }
 
+  const handleLeaderBoardClick = () => {
+    setCurrentPageState('leaderboardState')
+  }
+
+  const handleStatsClick = () => {
+    setCurrentPageState('profileState')
+  }
+
+  const handleGithubClick = () => {}
+
   return (
     <>
       {currentPageState !== 'animationState' && (
         <div id="outer-nav-container">
-          <img id="home-nav-link" src={homeImage} onClick={handleHomeClick} />
           <img
-            id="leaderboard-nav-link"
-            src={leaderboardImage}
+            className="invertImageColor"
+            src={images.home}
+            onClick={handleHomeClick}
+          />
+          <img
+            className="invertImageColor"
+            src={images.leaderboard}
             onClick={handleLeaderBoardClick}
           />
-          <img src={profileImage} onClick={handleStatsClick} />
+          <img src={images.profile} onClick={handleStatsClick} />
+          <a
+            target="_blank"
+            href="https://github.com/braydenwerner/werntype"
+            rel="noreferrer"
+          >
+            <img
+              className="invertImageColor"
+              id="github-nav-link"
+              src={images.github}
+            />
+          </a>
         </div>
       )}
     </>

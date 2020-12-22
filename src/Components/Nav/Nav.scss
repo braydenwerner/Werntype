@@ -25,8 +25,7 @@
     transform: translateY(-3px);
   }
 
-  #home-nav-link,
-  #leaderboard-nav-link {
+  .invertImageColor {
     filter: invert(1);
   }
 }
