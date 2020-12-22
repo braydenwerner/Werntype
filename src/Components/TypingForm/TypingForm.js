@@ -11,7 +11,7 @@ import {
   wpmState,
   signedInState,
   docDataState
-} from '../../recoil'
+} from '../../atoms/recoil'
 import './TypingForm.scss'
 
 export default function TypingForm() {

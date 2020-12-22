@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { useRecoilValue, useRecoilState } from 'recoil'
-import { pageState, signedInState, docDataState } from '../../recoil'
-import { app, auth, db } from '../../firebase'
+import { pageState, signedInState, docDataState } from '../../atoms/recoil'
+import { auth, db } from '../../firebase'
 import './Profile.scss'
 import AnimatedHeader from '../AnimatedHeader/AnimatedHeader'
 
@@ -54,7 +54,8 @@ export default function Profile() {
                   bestWPM: 0,
                   avgWPM: 0,
                   lastWPM: 0,
-                  totalRaces: 0
+                  totalRaces: 0,
+                  totalPoints: 0
                 })
                 .catch((error) => {
                   handleError(error.message)

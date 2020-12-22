@@ -7,8 +7,8 @@ import {
   correctIndexState,
   currentIndexState,
   pageState
-} from '../../recoil'
-import { generateText } from '../../utils'
+} from '../../atoms/recoil'
+import { generateText } from '../../util/utils'
 import homeImage from '../../Image/home.png'
 import leaderboardImage from '../../Image/leaderboard-white.png'
 import profileImage from '../../Image/profile-white.png'

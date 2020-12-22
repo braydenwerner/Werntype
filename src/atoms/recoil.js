@@ -1,5 +1,5 @@
 import { atom } from 'recoil'
-import { generateText } from './utils'
+import { generateText } from '../util/utils'
 
 export const promptState = atom({
   key: 'promptState',

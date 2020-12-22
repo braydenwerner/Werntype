@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { useSetRecoilState, useRecoilState, useRecoilValue } from 'recoil'
+import { useSetRecoilState } from 'recoil'
 import {
   correctIndexState,
   currentIndexState,
@@ -7,8 +7,8 @@ import {
   promptState,
   wordIndexState,
   wordStartIndexState
-} from '../../recoil'
-import { generateText } from '../../utils'
+} from '../../atoms/recoil'
+import { generateText } from '../../util/utils'
 import './Restart.scss'
 
 export default function Restart() {
