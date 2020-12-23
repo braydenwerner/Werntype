@@ -114,74 +114,76 @@ export default function Profile() {
 
   //  contains nested component AnimatedHeader
   return (
-    <div id="outer-profile-container">
+    <>
       {currentPageState === 'profileState' && (
-        <div id="outer-stats-container">
-          {errorMessage === '' && signedIn && (
-            <div id="inner-stats-container">
-              <AnimatedHeader text="Profile" />
-              <h1>{docData.username}</h1>
-              <div id="inner-stats-row">
-                <h2>Average WPM</h2>
-                <div className="stat-box">{docData.avgWPM}</div>
-                <h2>Fastest WPM</h2>
-                <div className="stat-box">{docData.bestWPM}</div>
-                <h2>Last WPM</h2>
-                <div className="stat-box">{docData.lastWPM}</div>
-                <h2>Total Races</h2>
-                <div className="stat-box">{docData.totalRaces}</div>
+        <div id="outer-profile-container">
+          <div id="outer-stats-container">
+            {errorMessage === '' && signedIn && (
+              <div id="inner-stats-container">
+                <AnimatedHeader text="Profile" />
+                <h1>{docData.username}</h1>
+                <div id="inner-stats-row">
+                  <h2>Average WPM</h2>
+                  <div className="stat-box">{docData.avgWPM}</div>
+                  <h2>Fastest WPM</h2>
+                  <div className="stat-box">{docData.bestWPM}</div>
+                  <h2>Last WPM</h2>
+                  <div className="stat-box">{docData.lastWPM}</div>
+                  <h2>Total Races</h2>
+                  <div className="stat-box">{docData.totalRaces}</div>
+                </div>
+                <button onClick={signOut}>Sign out</button>
               </div>
-              <button onClick={signOut}>Sign out</button>
-            </div>
-          )}
-          {!signedIn && (
-            <div id="outer-signin-container">
-              <AnimatedHeader text="Sign In To See Profile" />
-              <div id="outer-form-signin">
-                <form id="signin-container">
-                  <input
-                    type="text"
-                    placeholder="email"
-                    required
-                    ref={signinRefEmail}
-                  />
-                  <input
-                    type="text"
-                    placeholder="password"
-                    required
-                    ref={signinRefPassword}
-                  />
-                  <button type="login-input-button" onClick={signIn}>
-                    Login
-                  </button>
-                </form>
+            )}
+            {!signedIn && (
+              <div id="outer-signin-container">
+                <AnimatedHeader text="Sign In To See Profile" />
+                <div id="outer-form-signin">
+                  <form id="signin-container">
+                    <input
+                      type="text"
+                      placeholder="email"
+                      required
+                      ref={signinRefEmail}
+                    />
+                    <input
+                      type="text"
+                      placeholder="password"
+                      required
+                      ref={signinRefPassword}
+                    />
+                    <button type="login-input-button" onClick={signIn}>
+                      Login
+                    </button>
+                  </form>
 
-                <form id="signup-container">
-                  <input
-                    type="text"
-                    placeholder="email"
-                    required
-                    ref={signupRefEmail}
-                  />
-                  <input
-                    type="text"
-                    placeholder="username"
-                    required
-                    ref={signupRefUsername}
-                  />
-                  <input
-                    type="text"
-                    placeholder="password"
-                    required
-                    ref={signupRefPassword}
-                  />
-                  <button type="submit" onClick={signUp}>
-                    Sign Up
-                  </button>
-                </form>
+                  <form id="signup-container">
+                    <input
+                      type="text"
+                      placeholder="email"
+                      required
+                      ref={signupRefEmail}
+                    />
+                    <input
+                      type="text"
+                      placeholder="username"
+                      required
+                      ref={signupRefUsername}
+                    />
+                    <input
+                      type="text"
+                      placeholder="password"
+                      required
+                      ref={signupRefPassword}
+                    />
+                    <button type="submit" onClick={signUp}>
+                      Sign Up
+                    </button>
+                  </form>
+                </div>
               </div>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       )}
       <div id="error-container">
@@ -189,6 +191,6 @@ export default function Profile() {
           <div id="error-message">{errorMessage}</div>
         )}
       </div>
-    </div>
+    </>
   )
 }

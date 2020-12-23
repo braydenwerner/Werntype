@@ -1,16 +1,12 @@
 @import '../../Constants/constants.scss';
 
-#leaderboard-outer-container {
-  display: flex;
-  flex-direction: column;
-  width: 800px;
+th,
+td {
+  border: 1px solid black;
+  padding: 20px;
+}
 
-  #leaderboard-inner-container {
-    display: flex;
-    justify-content: center;
-
-    div {
-      margin: 10px 10px 10px 10px;
-    }
-  }
+table.center {
+  margin-left: auto;
+  margin-right: auto;
 }
