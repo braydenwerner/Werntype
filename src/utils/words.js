@@ -761,8 +761,6 @@ const words = [
   'set',
   'seven',
   'several',
-  'sex',
-  'sexual',
   'shake',
   'share',
   'she',
