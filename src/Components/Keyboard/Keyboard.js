@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useRecoilValue } from 'recoil'
 
-import { pageState } from '../../atoms/recoil'
+import { pageState } from '../../atoms/atoms'
 
 import './Keyboard.scss'
 

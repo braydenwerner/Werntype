@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { db } from '../../firebase'
-import { pageState } from '../../atoms/recoil'
+import { pageState } from '../../atoms/atoms'
 import './Leaderboard.scss'
 import { useRecoilValue } from 'recoil'
 import AnimatedHeader from '../AnimatedHeader/AnimatedHeader'

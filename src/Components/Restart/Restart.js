@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react'
-import { useSetRecoilState } from 'recoil'
+import { useRecoilValue, useSetRecoilState } from 'recoil'
 import {
   correctIndexState,
   currentIndexState,
   pageState,
   promptState,
   wordIndexState,
-  wordStartIndexState
-} from '../../atoms/recoil'
-import { generateText } from '../../util/utils'
+  wordStartIndexState,
+  numWordsState
+} from '../../atoms/atoms'
+import { generateText } from '../../utils/utils'
 import './Restart.scss'
 
 export default function Restart() {
@@ -17,8 +18,9 @@ export default function Restart() {
   const setCurrentWordStartIndex = useSetRecoilState(wordStartIndexState)
   const setCurrentCorrectIndex = useSetRecoilState(correctIndexState)
   const setCurrentIndex = useSetRecoilState(currentIndexState)
-
   const setCurrentPageState = useSetRecoilState(pageState)
+
+  const numWords = useRecoilValue(numWordsState)
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown)
@@ -31,7 +33,7 @@ export default function Restart() {
   }
 
   const restart = () => {
-    setCurrentPrompt(generateText())
+    setCurrentPrompt(generateText(numWords))
     setCurrentWordIndex(0)
     setCurrentWordStartIndex(0)
     setCurrentCorrectIndex(0)

@@ -11,7 +11,7 @@ import {
   wpmState,
   signedInState,
   docDataState
-} from '../../atoms/recoil'
+} from '../../atoms/atoms'
 import './TypingForm.scss'
 
 export default function TypingForm() {
@@ -63,6 +63,7 @@ export default function TypingForm() {
     if (currentIndex === 0) setStartTime(Date.now())
 
     const numWords = currentPrompt.split(' ').length
+    console.log(numWords)
     const currentWord = currentPrompt.split(' ')[currentWordIndex]
     const formValue = formRef.current.value
 

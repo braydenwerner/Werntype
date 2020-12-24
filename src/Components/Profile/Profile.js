@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { useRecoilValue, useRecoilState } from 'recoil'
-import { pageState, signedInState, docDataState } from '../../atoms/recoil'
+import { pageState, signedInState, docDataState } from '../../atoms/atoms'
 import { auth, db } from '../../firebase'
 import './Profile.scss'
 import AnimatedHeader from '../AnimatedHeader/AnimatedHeader'

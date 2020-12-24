@@ -1,14 +1,15 @@
 import React from 'react'
-import { useRecoilState, useSetRecoilState } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import {
   promptState,
   wordIndexState,
   wordStartIndexState,
   correctIndexState,
   currentIndexState,
-  pageState
-} from '../../atoms/recoil'
-import { generateText } from '../../util/utils'
+  pageState,
+  numWordsState
+} from '../../atoms/atoms'
+import { generateText } from '../../utils/utils'
 import images from '../../Image/exports'
 import './Nav.scss'
 
@@ -18,11 +19,12 @@ export default function Nav() {
   const setCurrentWordStartIndex = useSetRecoilState(wordStartIndexState)
   const setCurrentCorrectIndex = useSetRecoilState(correctIndexState)
   const setCurrentIndex = useSetRecoilState(currentIndexState)
-
   const [currentPageState, setCurrentPageState] = useRecoilState(pageState)
 
+  const numWords = useRecoilValue(numWordsState)
+
   const handleHomeClick = () => {
-    setCurrentPrompt(generateText())
+    setCurrentPrompt(generateText(numWords))
     setCurrentWordIndex(0)
     setCurrentWordStartIndex(0)
     setCurrentCorrectIndex(0)
@@ -37,8 +39,6 @@ export default function Nav() {
   const handleStatsClick = () => {
     setCurrentPageState('profileState')
   }
-
-  const handleGithubClick = () => {}
 
   return (
     <>

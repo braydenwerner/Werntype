@@ -1,5 +1,6 @@
 {
   "projects": {
-    "default": "werntype"
+    "default": "werntype",
+    "werntype": "react-recoil-firebase"
   }
 }

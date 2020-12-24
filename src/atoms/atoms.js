@@ -1,9 +1,9 @@
 import { atom } from 'recoil'
-import { generateText } from '../util/utils'
+import { generateText } from '../utils/utils'
 
 export const promptState = atom({
   key: 'promptState',
-  default: generateText()
+  default: generateText(25)
 })
 
 export const wordIndexState = atom({
@@ -24,6 +24,11 @@ export const correctIndexState = atom({
 export const currentIndexState = atom({
   key: 'currentIndexState',
   default: 0
+})
+
+export const numWordsState = atom({
+  key: 'numWordsState',
+  default: 20
 })
 
 export const pageState = atom({
