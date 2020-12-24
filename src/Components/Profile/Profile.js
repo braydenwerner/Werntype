@@ -147,7 +147,7 @@ export default function Profile() {
                       ref={signinRefEmail}
                     />
                     <input
-                      type="text"
+                      type="password"
                       placeholder="password"
                       required
                       ref={signinRefPassword}
@@ -172,7 +172,7 @@ export default function Profile() {
                       ref={signupRefUsername}
                     />
                     <input
-                      type="text"
+                      type="password"
                       placeholder="password"
                       required
                       ref={signupRefPassword}
