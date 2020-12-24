@@ -1,12 +1,51 @@
 @import '../../Constants/constants.scss';
 
-th,
-td {
-  border: 1px solid black;
-  padding: 20px;
-}
+#leaderboard-outer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
-table.center {
-  margin-left: auto;
-  margin-right: auto;
+  width: 800px;
+
+  position: relative;
+  bottom: 10%;
+
+  @media (max-width: 850px) {
+    width: 80%;
+  }
+
+  #leaderboard-table {
+    margin-top: 25px;
+    font-family: $mainFont;
+    width: 100%;
+    color: $themeBlue;
+
+    @media (max-width: 850px) {
+      font-size: 12px;
+    }
+
+    #leaderboard-header-row {
+      text-align: left;
+
+      th {
+        padding: 10px;
+      }
+    }
+
+    #leaderboard-inner-row {
+      padding: 5px;
+
+      td {
+        padding: 7px;
+      }
+    }
+  }
+
+  .isPrimaryColor-true {
+    background-color: $themeGreen;
+  }
+
+  .isPrimaryColor-false {
+    background-color: WHITE;
+  }
 }

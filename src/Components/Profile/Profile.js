@@ -167,6 +167,7 @@ export default function Profile() {
                     <input
                       type="text"
                       placeholder="username"
+                      maxLength="20"
                       required
                       ref={signupRefUsername}
                     />

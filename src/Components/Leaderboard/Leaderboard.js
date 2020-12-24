@@ -7,24 +7,24 @@ import AnimatedHeader from '../AnimatedHeader/AnimatedHeader'
 
 export default function Leaderboard() {
   const currentPageState = useRecoilValue(pageState)
-  const [bestScores, setBestScores] = useState({})
+  const [bestScores, setBestScores] = useState([])
+  let isPrimary = true
 
   useEffect(() => {
-    const scores = {}
+    const scores = []
     db.collection('users')
       .get()
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
-          scores[doc.data().username] = {
+          scores.push({
             username: doc.data().username,
             bestWPM: doc.data().bestWPM,
             avgWPM: doc.data().avgWPM,
             totalRaces: doc.data().totalRaces
-          }
+          })
         })
 
-        //    sort object keys by highest WPM
-        Object.keys(scores).sort((a, b) => b.bestWPM - a.bestWPM)
+        scores.sort((a, b) => b.bestWPM - a.bestWPM)
         setBestScores(scores)
       })
   }, [])
@@ -32,23 +32,35 @@ export default function Leaderboard() {
   return (
     <>
       {currentPageState === 'leaderboardState' && (
-        <div>
+        <div id="leaderboard-outer-container">
           <AnimatedHeader text="Leaderboard" />
-          <table id="leaderboard-outer-container">
-            <tr>
-              <th>Username</th>
-              <th>Best WPM</th>
-              <th>Average WPM</th>
-              <th>Total Races</th>
-            </tr>
-            {Object.keys(bestScores).map((key) => {
+          <table id="leaderboard-table" rules="none">
+            <thead>
+              <tr
+                id="leaderboard-header-row"
+                className={`isPrimaryColor-${isPrimary}`}
+              >
+                <th>Username</th>
+                <th>Best WPM</th>
+                <th>Average WPM</th>
+                <th>Total Races</th>
+              </tr>
+            </thead>
+            {bestScores.map((score, i) => {
+              isPrimary = !isPrimary
+
               return (
-                <tr id="leaderboard-inner-container" key={key}>
-                  <td>{bestScores[key].username}</td>
-                  <td>{bestScores[key].bestWPM}</td>
-                  <td>{bestScores[key].avgWPM}</td>
-                  <td>{bestScores[key].totalRaces}</td>
-                </tr>
+                <tbody key={i}>
+                  <tr
+                    id="leaderboard-inner-row"
+                    className={`isPrimaryColor-${isPrimary}`}
+                  >
+                    <td>{score.username}</td>
+                    <td>{score.bestWPM}</td>
+                    <td>{score.avgWPM}</td>
+                    <td>{score.totalRaces}</td>
+                  </tr>
+                </tbody>
               )
             })}
           </table>
