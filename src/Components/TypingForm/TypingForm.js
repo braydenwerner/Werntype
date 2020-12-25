@@ -173,6 +173,7 @@ export default function TypingForm() {
             ref={formRef}
             autoComplete="off"
             autoCapitalize="none"
+            onPaste="return false"
             autoFocus
           ></input>
         </div>
