@@ -51,6 +51,11 @@ export default function TypingForm() {
   //  whether the user is signed in or not
   const signedIn = useRecoilValue(signedInState)
 
+  //  do not allow copy paste into form
+  useEffect(() => {
+    formRef.current.onpaste = (e) => e.preventDefault()
+  }, [])
+
   //  if the prompt is changed, reset the form
   useEffect(() => {
     if (formRef.current) formRef.current.value = ''
@@ -103,7 +108,6 @@ export default function TypingForm() {
 
       //  update user's stats
       if (signedIn) {
-        const avgWPM = docData.avgWPM
         const bestWPM = docData.bestWPM
         const email = docData.email
         const totalRaces = docData.totalRaces

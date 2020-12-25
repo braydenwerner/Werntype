@@ -17,7 +17,7 @@ export default function Leaderboard() {
 
   useEffect(() => {
     const snapshot = db.collection('users').onSnapshot((querySnapshot) => {
-      const scores = []
+      let scores = []
       querySnapshot.forEach((doc) => {
         scores.push({
           username: doc.data().username,
@@ -34,6 +34,9 @@ export default function Leaderboard() {
       } else if (sortBy === 'totalRaces') {
         scores.sort((a, b) => b.totalRaces - a.totalRaces)
       }
+
+      //  take top 8 scores
+      scores = scores.splice(0, 9)
 
       setBestScores(scores)
     })
