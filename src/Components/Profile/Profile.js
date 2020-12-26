@@ -11,6 +11,7 @@ export default function Profile() {
   const signupRefEmail = useRef(null)
   const signupRefUsername = useRef(null)
   const signupRefPassword = useRef(null)
+  const signupRefPasswordConfirm = useRef(null)
 
   const currentPageState = useRecoilValue(pageState)
   const [signedIn, setSignedIn] = useRecoilState(signedInState)
@@ -30,6 +31,7 @@ export default function Profile() {
 
   const signIn = (e) => {
     e.preventDefault()
+
     auth
       .signInWithEmailAndPassword(
         signinRefEmail.current.value,
@@ -71,6 +73,14 @@ export default function Profile() {
   //  sign up, add defaul values to database
   const signUp = (e) => {
     e.preventDefault()
+
+    if (
+      signupRefPassword.current.value !== signupRefPasswordConfirm.current.value
+    ) {
+      handleError('Passwords do not match.')
+      return
+    }
+
     const email = signupRefEmail.current.value
     const username = signupRefUsername.current.value
     const password = signupRefPassword.current.value
@@ -84,8 +94,10 @@ export default function Profile() {
           auth
             .createUserWithEmailAndPassword(email, password)
             .then(() => {
+              signupRefEmail.current.value = ''
               signupRefUsername.current.value = ''
               signupRefPassword.current.value = ''
+              signupRefPasswordConfirm.current.value = ''
 
               db.collection('users')
                 .doc(email)
@@ -206,6 +218,12 @@ export default function Profile() {
                       placeholder="password"
                       required
                       ref={signupRefPassword}
+                    />
+                    <input
+                      type="password"
+                      placeholder="confirm password"
+                      required
+                      ref={signupRefPasswordConfirm}
                     />
                     <button type="submit" onClick={signUp}>
                       Sign Up
