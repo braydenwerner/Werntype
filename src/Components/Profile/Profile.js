@@ -16,7 +16,17 @@ export default function Profile() {
   const [signedIn, setSignedIn] = useRecoilState(signedInState)
   const [docData, setDocData] = useRecoilState(docDataState)
 
+  const [message, setMessage] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
+
+  //  detects sign in, sign out. retrieves data and runs setDocData() to render
+  useEffect(() => {
+    if (auth.currentUser && auth.currentUser.emailVerified) {
+      setSignedIn(true)
+    } else {
+      signOut()
+    }
+  }, [])
 
   const signIn = (e) => {
     e.preventDefault()
@@ -25,6 +35,34 @@ export default function Profile() {
         signinRefEmail.current.value,
         signinRefPassword.current.value
       )
+      .then(() => {
+        if (auth.currentUser.emailVerified) {
+          console.log(`the email ${auth.currentUser.email} has been verified`)
+          const docRef = db.collection('users').doc(auth.currentUser.email)
+
+          docRef
+            .get()
+            .then((doc) => {
+              if (doc.exists) {
+                console.log('doc.data(): ', doc.data())
+                setDocData({
+                  email: auth.currentUser.email,
+                  ...doc.data()
+                })
+              }
+
+              setSignedIn(true)
+            })
+            .catch((error) => {
+              handleError(error.message)
+            })
+        } else {
+          handleError(
+            'You must verify your email before signing in! We are sending another verification email.'
+          )
+          sendVerificantionEmail()
+        }
+      })
       .catch((error) => {
         handleError(error.message)
       })
@@ -46,6 +84,9 @@ export default function Profile() {
           auth
             .createUserWithEmailAndPassword(email, password)
             .then(() => {
+              signupRefUsername.current.value = ''
+              signupRefPassword.current.value = ''
+
               db.collection('users')
                 .doc(email)
                 .set({
@@ -60,6 +101,8 @@ export default function Profile() {
                 .catch((error) => {
                   handleError(error.message)
                 })
+
+              sendVerificantionEmail()
             })
             .catch((error) => {
               handleError(error.message)
@@ -73,7 +116,21 @@ export default function Profile() {
       })
   }
 
+  const sendVerificantionEmail = () => {
+    auth.currentUser
+      .sendEmailVerification()
+      .then(() => {
+        setMessage(
+          'A confirmation email was sent. Confirm to activate your account!'
+        )
+      })
+      .catch((error) => {
+        handleError(error.code)
+      })
+  }
+
   const handleError = (error) => {
+    if (message !== '') setMessage('')
     setErrorMessage(error)
     const unsetErrorInterval = setInterval(() => setErrorMessage(' '), 5000)
     setTimeout(() => clearInterval(unsetErrorInterval), 5000)
@@ -83,34 +140,9 @@ export default function Profile() {
     auth.signOut().catch((error) => {
       handleError(error.message)
     })
+
+    setSignedIn(false)
   }
-
-  //  detects sign in, sign out. retrieves data and runs setDocData() to render
-  useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setErrorMessage('')
-        setSignedIn(true)
-
-        const docRef = db.collection('users').doc(user.email)
-        docRef
-          .get()
-          .then((doc) => {
-            if (doc.exists) {
-              setDocData({
-                email: user.email,
-                ...doc.data()
-              })
-            }
-          })
-          .catch((error) => {
-            handleError(error.message)
-          })
-      } else {
-        setSignedIn(false)
-      }
-    })
-  }, [])
 
   //  contains nested component AnimatedHeader
   return (
@@ -118,7 +150,7 @@ export default function Profile() {
       {currentPageState === 'profileState' && (
         <div id="outer-profile-container">
           <div id="outer-stats-container">
-            {errorMessage === '' && signedIn && (
+            {signedIn && (
               <div id="inner-stats-container">
                 <AnimatedHeader text="Profile" />
                 <h1>{docData.username}</h1>
@@ -152,9 +184,7 @@ export default function Profile() {
                       required
                       ref={signinRefPassword}
                     />
-                    <button type="login-input-button" onClick={signIn}>
-                      Login
-                    </button>
+                    <button onClick={signIn}>Login</button>
                   </form>
 
                   <form id="signup-container">
@@ -187,7 +217,7 @@ export default function Profile() {
           </div>
         </div>
       )}
-      <div id="error-container">
+      <div className="notification-container">
         {errorMessage !== '' && currentPageState === 'profileState' && (
           <div id="error-message">{errorMessage}</div>
         )}

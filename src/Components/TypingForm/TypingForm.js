@@ -167,7 +167,6 @@ export default function TypingForm() {
               {currentPrompt.substring(currentIndex, currentPrompt.length)}
             </span>
           </div>
-
           <input
             id="typing-form"
             type="text"

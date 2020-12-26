@@ -36,7 +36,7 @@ export default function Leaderboard() {
       }
 
       //  take top 8 scores
-      scores = scores.splice(0, 9)
+      scores = scores.splice(0, 8)
 
       setBestScores(scores)
     })
