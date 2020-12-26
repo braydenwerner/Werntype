@@ -240,9 +240,11 @@ export default function Profile() {
           <div id="message">{message}</div>
         )}
 
-        {errorMessage !== '' && currentPageState === 'profileState' && (
-          <div id="error-message">{errorMessage}</div>
-        )}
+        {!signedIn &&
+          errorMessage !== '' &&
+          currentPageState === 'profileState' && (
+            <div id="error-message">{errorMessage}</div>
+          )}
       </div>
     </>
   )
