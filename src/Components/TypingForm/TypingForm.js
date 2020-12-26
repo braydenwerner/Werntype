@@ -68,7 +68,6 @@ export default function TypingForm() {
     if (currentIndex === 0) setStartTime(Date.now())
 
     const numWords = currentPrompt.split(' ').length
-    console.log(numWords)
     const currentWord = currentPrompt.split(' ')[currentWordIndex]
     const formValue = formRef.current.value
 
@@ -148,6 +147,11 @@ export default function TypingForm() {
     setCurrentIndex(totalIndex)
   }
 
+  const handlePaste = () => {
+    alert('Please do not paste into the text box.')
+    formRef.current.value = ''
+  }
+
   return (
     <>
       {currentPageState === 'typingState' && (
@@ -173,7 +177,7 @@ export default function TypingForm() {
             ref={formRef}
             autoComplete="off"
             autoCapitalize="none"
-            onPaste="return false"
+            onPaste={handlePaste}
             autoFocus
           ></input>
         </div>
