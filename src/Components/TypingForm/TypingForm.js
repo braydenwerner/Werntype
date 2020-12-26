@@ -117,27 +117,30 @@ export default function TypingForm() {
           currentCorrectIndex / 4.7 / ((Date.now() - startTime) / 60000)
         )
 
-        //  store the new data
-        const newData = {
-          email: email,
-          avgWPM: Math.floor((points + tempWPM) / (totalRaces + 1)),
-          bestWPM: tempWPM > bestWPM ? tempWPM : bestWPM,
-          lastWPM: tempWPM,
-          totalRaces: totalRaces + 1,
-          points: points + tempWPM,
-          username: username
-        }
+        //  if over 300 words, player is cheating unless superhuman typing master
+        if (tempWPM <= 300) {
+          //  store the new data
+          const newData = {
+            email: email,
+            avgWPM: Math.floor((points + tempWPM) / (totalRaces + 1)),
+            bestWPM: tempWPM > bestWPM ? tempWPM : bestWPM,
+            lastWPM: tempWPM,
+            totalRaces: totalRaces + 1,
+            points: points + tempWPM,
+            username: username
+          }
 
-        //  set doc data so it gets rendered on profile
-        setDocData(newData)
-        db.collection('users')
-          .doc(email)
-          .set({
-            ...newData
-          })
-          .catch((error) => {
-            console.log(error.message)
-          })
+          //  set doc data so it gets rendered on profile
+          setDocData(newData)
+          db.collection('users')
+            .doc(email)
+            .set({
+              ...newData
+            })
+            .catch((error) => {
+              console.log(error.message)
+            })
+        }
       }
 
       setCurrentPageState('summaryState')
