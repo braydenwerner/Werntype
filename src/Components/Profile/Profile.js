@@ -37,14 +37,14 @@ export default function Profile() {
       )
       .then(() => {
         if (auth.currentUser.emailVerified) {
-          console.log(`the email ${auth.currentUser.email} has been verified`)
+          //  console.log(`the email ${auth.currentUser.email} has been verified`)
           const docRef = db.collection('users').doc(auth.currentUser.email)
 
           docRef
             .get()
             .then((doc) => {
               if (doc.exists) {
-                console.log('doc.data(): ', doc.data())
+                //  console.log('doc.data(): ', doc.data())
                 setDocData({
                   email: auth.currentUser.email,
                   ...doc.data()
@@ -218,6 +218,10 @@ export default function Profile() {
         </div>
       )}
       <div className="notification-container">
+        {message !== '' && currentPageState === 'profileState' && (
+          <div id="message">{message}</div>
+        )}
+
         {errorMessage !== '' && currentPageState === 'profileState' && (
           <div id="error-message">{errorMessage}</div>
         )}
