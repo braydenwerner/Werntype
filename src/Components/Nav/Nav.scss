@@ -6,7 +6,7 @@
   flex-direction: column;
   align-items: center;
 
-  @media (max-height: 760px) {
+  @media (max-height: 800px) {
     top: 0%;
   }
 
@@ -39,7 +39,7 @@
     align-items: center;
     color: WHITE;
 
-    @media (max-width: 580px) {
+    @media (max-height: 640px) {
       display: none;
     }
 

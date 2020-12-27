@@ -1,6 +1,8 @@
 @import '../../Constants/constants';
 
 #inner-restart-container {
+  position: absolute;
+  bottom: 5%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -11,7 +13,7 @@
     height: 64px;
     margin-top: 25px;
 
-    @media (max-height: 840px) {
+    @media (max-height: 720px) {
       display: none;
     }
   }
@@ -25,6 +27,10 @@
     align-items: center;
     color: WHITE;
     margin-top: 25px;
+
+    @media (max-height: 540px) {
+      display: none;
+    }
 
     #escape-key {
       @include key-highlight;
