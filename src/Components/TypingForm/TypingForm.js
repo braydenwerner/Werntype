@@ -67,7 +67,7 @@ export default function TypingForm() {
   const handleKeyDown = () => {
     //  if the last input was a number, remove it
     const formValue = formRef.current.value
-    if (/\d/.test(parseInt(formValue))) {
+    if (formValue === '`') {
       formRef.current.value = formValue.substring(0, formValue.length - 1)
       return
     }
