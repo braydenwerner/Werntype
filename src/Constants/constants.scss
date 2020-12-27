@@ -1,9 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Prompt&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Work+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Overpass+Mono&display=swap');
 
 $themeGreen: #9ee493;
 $themeBlue: #2f4858;
 $themeLightBlue: #336699;
 
 $mainFont: 'Prompt', sans-serif;
+$textPromptFont: 'Overpass Mono', monospace;
 $mainHeaderFont: 'Work Sans', sans-serif;
+
+@mixin key-highlight {
+  font-family: $mainFont;
+  background-color: $themeGreen;
+  color: $themeBlue;
+  padding: 4px;
+  margin: 0px 8px 0px 8px;
+}

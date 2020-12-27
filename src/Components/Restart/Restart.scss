@@ -4,8 +4,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  position: absolute;
-  bottom: 10%;
 
   #restart-image {
     background-image: url('../../Image/restart-green.png');
@@ -28,16 +26,8 @@
     color: WHITE;
     margin-top: 25px;
 
-    @media (max-height: 690px) {
-      display: none;
-    }
-
     #escape-key {
-      font-family: $mainFont;
-      background-color: $themeGreen;
-      color: $themeBlue;
-      padding: 4px;
-      margin: 0px 8px 0px 8px;
+      @include key-highlight;
     }
   }
 }

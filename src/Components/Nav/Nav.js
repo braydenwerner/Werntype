@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import {
   promptState,
@@ -23,6 +23,36 @@ export default function Nav() {
 
   const numWords = useRecoilValue(numWordsState)
 
+  const pageStates = ['typingState', 'leaderboardState', 'profileState']
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeyDown)
+
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
+  useEffect(() => {
+    console.log(currentPageState)
+  }, [currentPageState])
+
+  //  event listeners act different with useState. React thinks new function each time,
+  //  currentPageState will always be initial value.
+  //  https://stackoverflow.com/questions/53845595/wrong-react-hooks-behaviour-with-event-listener
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      setCurrentPageState((oldPageState) => {
+        let currentPageIndex = pageStates.indexOf(oldPageState)
+
+        if (currentPageIndex < pageStates.length - 1) {
+          currentPageIndex++
+        } else {
+          currentPageIndex = 0
+        }
+        return pageStates[currentPageIndex]
+      })
+    }
+  }
+
   const handleHomeClick = () => {
     setCurrentPrompt(generateText(numWords))
     setCurrentWordIndex(0)
@@ -44,28 +74,33 @@ export default function Nav() {
     <>
       {currentPageState !== 'animationState' && (
         <div id="outer-nav-container">
-          <img
-            className="invertImageColor"
-            src={images.home}
-            onClick={handleHomeClick}
-          />
-          <img
-            className="invertImageColor"
-            src={images.leaderboard}
-            onClick={handleLeaderBoardClick}
-          />
-          <img src={images.profile} onClick={handleStatsClick} />
-          <a
-            target="_blank"
-            href="https://github.com/braydenwerner/werntype"
-            rel="noreferrer"
-          >
+          <div id="inner-nav-container">
             <img
               className="invertImageColor"
-              id="github-nav-link"
-              src={images.github}
+              src={images.home}
+              onClick={handleHomeClick}
             />
-          </a>
+            <img
+              className="invertImageColor"
+              src={images.leaderboard}
+              onClick={handleLeaderBoardClick}
+            />
+            <img src={images.profile} onClick={handleStatsClick} />
+            <a
+              target="_blank"
+              href="https://github.com/braydenwerner/werntype"
+              rel="noreferrer"
+            >
+              <img
+                className="invertImageColor"
+                id="github-nav-link"
+                src={images.github}
+              />
+            </a>
+          </div>
+          <div id="nav-shortcut-text">
+            <div id="enter-key">Enter</div>- Next Page
+          </div>
         </div>
       )}
     </>

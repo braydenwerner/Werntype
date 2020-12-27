@@ -6,10 +6,17 @@
   justify-content: center;
   width: 800px;
   position: relative;
-  bottom: 5%;
 
   @media (max-width: 850px) {
     width: 80%;
+  }
+
+  @media (max-height: 670px) {
+    top: 2%;
+  }
+
+  @media (max-height: 515px) {
+    top: 0%;
   }
 
   #leaderboard-select-container {

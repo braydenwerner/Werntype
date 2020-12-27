@@ -1,31 +1,50 @@
 @import '../../Constants/constants';
-
 #outer-nav-container {
   position: absolute;
+  top: 10%;
   display: flex;
-  justify-content: center;
-  top: 5%;
+  flex-direction: column;
+  align-items: center;
 
-  @media (max-height: 690px) {
+  @media (max-height: 760px) {
     top: 0%;
   }
 
-  @media (max-height: 510px) {
+  @media (max-height: 530px) {
     display: none;
   }
 
-  img {
-    position: relative;
-    width: 32px;
-    height: 32px;
-    margin: 25px 25px 25px 25px;
+  #inner-nav-container {
+    display: flex;
+    justify-content: center;
+
+    img {
+      position: relative;
+      width: 32px;
+      height: 32px;
+      margin: 25px 25px 25px 25px;
+    }
+
+    img:hover {
+      transform: translateY(-3px);
+    }
+
+    .invertImageColor {
+      filter: invert(1);
+    }
   }
 
-  img:hover {
-    transform: translateY(-3px);
-  }
+  #nav-shortcut-text {
+    display: flex;
+    align-items: center;
+    color: WHITE;
 
-  .invertImageColor {
-    filter: invert(1);
+    @media (max-width: 580px) {
+      display: none;
+    }
+
+    #enter-key {
+      @include key-highlight;
+    }
   }
 }
