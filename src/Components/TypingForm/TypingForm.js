@@ -65,11 +65,18 @@ export default function TypingForm() {
   //  currentCorrectIndex + 1 -> currentIndex is red
   //  currentCurrentIndex + 1 -> currentPrompt.length is white
   const handleKeyDown = () => {
+    //  if the last input was a number, remove it
+    const formValue = formRef.current.value
+    if (/\d/.test(parseInt(formValue))) {
+      console.log('reached')
+      formRef.current.value = formValue.substring(0, formValue.length - 1)
+      return
+    }
+
     if (currentIndex === 0) setStartTime(Date.now())
 
     const numWords = currentPrompt.split(' ').length
     const currentWord = currentPrompt.split(' ')[currentWordIndex]
-    const formValue = formRef.current.value
 
     let correctChars = 0
     while (

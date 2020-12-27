@@ -31,25 +31,16 @@ export default function Nav() {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
-  useEffect(() => {
-    console.log(currentPageState)
-  }, [currentPageState])
-
   //  event listeners act different with useState. React thinks new function each time,
   //  currentPageState will always be initial value.
   //  https://stackoverflow.com/questions/53845595/wrong-react-hooks-behaviour-with-event-listener
   const handleKeyDown = (e) => {
-    if (e.key === 'Enter') {
-      setCurrentPageState((oldPageState) => {
-        let currentPageIndex = pageStates.indexOf(oldPageState)
-
-        if (currentPageIndex < pageStates.length - 1) {
-          currentPageIndex++
-        } else {
-          currentPageIndex = 0
-        }
-        return pageStates[currentPageIndex]
-      })
+    if (
+      /^[0-9]$/.test(e.key) &&
+      parseInt(e.key) <= pageStates.length &&
+      parseInt(e.key) >= 1
+    ) {
+      setCurrentPageState(pageStates[parseInt(e.key) - 1])
     }
   }
 
@@ -99,7 +90,7 @@ export default function Nav() {
             </a>
           </div>
           <div id="nav-shortcut-text">
-            <div id="enter-key">Enter</div>- Next Page
+            <div id="number-key">#</div> - Go to page
           </div>
         </div>
       )}
