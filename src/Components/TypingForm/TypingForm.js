@@ -158,8 +158,11 @@ export default function TypingForm() {
             <span style={{ color: 'RED' }}>
               {currentPrompt.substring(currentCorrectIndex, currentIndex)}
             </span>
+            <span style={{ color: 'WHITE', textDecoration: 'underline' }}>
+              {currentPrompt.substring(currentIndex, currentIndex + 1)}
+            </span>
             <span style={{ color: 'WHITE' }}>
-              {currentPrompt.substring(currentIndex, currentPrompt.length)}
+              {currentPrompt.substring(currentIndex + 1, currentPrompt.length)}
             </span>
           </div>
           <input

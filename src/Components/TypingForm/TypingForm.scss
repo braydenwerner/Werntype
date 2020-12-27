@@ -11,9 +11,15 @@
   }
 
   #text-prompt {
-    text-align: center;
+    text-align: left;
     color: $themeGreen;
     margin-bottom: 25px;
+
+    @keyframes blink {
+      50% {
+        opacity: 0;
+      }
+    }
 
     span {
       -webkit-user-select: none;

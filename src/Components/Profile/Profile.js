@@ -166,6 +166,7 @@ export default function Profile() {
               <div id="inner-stats-container">
                 <AnimatedHeader text="Profile" />
                 <h1>{docData.username}</h1>
+                <img src={auth.currentUser.photoURL} />
                 <div id="inner-stats-row">
                   <h2>Average WPM</h2>
                   <div className="stat-box">{docData.avgWPM}</div>
@@ -189,12 +190,14 @@ export default function Profile() {
                       placeholder="email"
                       required
                       ref={signinRefEmail}
+                      autoComplete="on"
                     />
                     <input
                       type="password"
                       placeholder="password"
                       required
                       ref={signinRefPassword}
+                      autoComplete="on"
                     />
                     <button onClick={signIn}>Login</button>
                   </form>
@@ -205,6 +208,7 @@ export default function Profile() {
                       placeholder="email"
                       required
                       ref={signupRefEmail}
+                      autoComplete="on"
                     />
                     <input
                       type="text"
@@ -212,18 +216,21 @@ export default function Profile() {
                       maxLength="20"
                       required
                       ref={signupRefUsername}
+                      autoComplete="on"
                     />
                     <input
                       type="password"
                       placeholder="password"
                       required
                       ref={signupRefPassword}
+                      autoComplete="on"
                     />
                     <input
                       type="password"
                       placeholder="confirm password"
                       required
                       ref={signupRefPasswordConfirm}
+                      autoComplete="on"
                     />
                     <button type="submit" onClick={signUp}>
                       Sign Up
