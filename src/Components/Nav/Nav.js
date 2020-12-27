@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import {
   promptState,
@@ -35,12 +35,17 @@ export default function Nav() {
   //  currentPageState will always be initial value.
   //  https://stackoverflow.com/questions/53845595/wrong-react-hooks-behaviour-with-event-listener
   const handleKeyDown = (e) => {
-    if (
-      /^[0-9]$/.test(e.key) &&
-      parseInt(e.key) <= pageStates.length &&
-      parseInt(e.key) >= 1
-    ) {
-      setCurrentPageState(pageStates[parseInt(e.key) - 1])
+    if (e.key === '`') {
+      setCurrentPageState((oldPageState) => {
+        let currentPageIndex = pageStates.indexOf(oldPageState)
+
+        if (currentPageIndex < pageStates.length - 1) {
+          currentPageIndex++
+        } else {
+          currentPageIndex = 0
+        }
+        return pageStates[currentPageIndex]
+      })
     }
   }
 
@@ -90,7 +95,7 @@ export default function Nav() {
             </a>
           </div>
           <div id="nav-shortcut-text">
-            <div id="number-key">#</div> - Go to page
+            <div id="tilde-key">`</div>- Next Page
           </div>
         </div>
       )}

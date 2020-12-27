@@ -68,7 +68,6 @@ export default function TypingForm() {
     //  if the last input was a number, remove it
     const formValue = formRef.current.value
     if (/\d/.test(parseInt(formValue))) {
-      console.log('reached')
       formRef.current.value = formValue.substring(0, formValue.length - 1)
       return
     }

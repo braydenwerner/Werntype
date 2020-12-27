@@ -43,8 +43,13 @@
       display: none;
     }
 
-    #number-key {
+    #tilde-key {
       @include key-highlight;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 18px;
+      height: 18px;
     }
   }
 }
