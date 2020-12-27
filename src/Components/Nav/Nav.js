@@ -43,6 +43,7 @@ export default function Nav() {
           currentPageIndex++
         } else {
           currentPageIndex = 0
+          resetTypingState()
         }
         return pageStates[currentPageIndex]
       })
@@ -50,11 +51,7 @@ export default function Nav() {
   }
 
   const handleHomeClick = () => {
-    setCurrentPrompt(generateText(numWords))
-    setCurrentWordIndex(0)
-    setCurrentWordStartIndex(0)
-    setCurrentCorrectIndex(0)
-    setCurrentIndex(0)
+    resetTypingState()
     setCurrentPageState('typingState')
   }
 
@@ -64,6 +61,14 @@ export default function Nav() {
 
   const handleStatsClick = () => {
     setCurrentPageState('profileState')
+  }
+
+  const resetTypingState = () => {
+    setCurrentPrompt(generateText(numWords))
+    setCurrentWordIndex(0)
+    setCurrentWordStartIndex(0)
+    setCurrentCorrectIndex(0)
+    setCurrentIndex(0)
   }
 
   return (
