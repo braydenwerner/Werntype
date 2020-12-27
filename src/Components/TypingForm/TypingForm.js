@@ -53,7 +53,7 @@ export default function TypingForm() {
 
   //  do not allow copy paste into form
   useEffect(() => {
-    formRef.current.onpaste = (e) => e.preventDefault()
+    if (formRef) formRef.current.onpaste = (e) => e.preventDefault()
   }, [])
 
   //  if the prompt is changed, reset the form
@@ -99,48 +99,40 @@ export default function TypingForm() {
 
     if (currentWordIndex === numWords - 1 && formValue === currentWord) {
       //  4.7 is the average length of word in English dictionary
-      setWPM(
-        Math.floor(
-          currentCorrectIndex / 4.7 / ((Date.now() - startTime) / 60000)
-        )
+      const tempWPM = Math.floor(
+        currentCorrectIndex / 4.7 / ((Date.now() - startTime) / 60000)
       )
+      setWPM(tempWPM)
 
       //  update user's stats
-      if (signedIn) {
+      //  if over 300 words, player is probably cheating
+      if (signedIn && tempWPM <= 300) {
         const bestWPM = docData.bestWPM
         const email = docData.email
         const totalRaces = docData.totalRaces
         const username = docData.username
         const points = docData.points
 
-        const tempWPM = Math.floor(
-          currentCorrectIndex / 4.7 / ((Date.now() - startTime) / 60000)
-        )
-
-        //  if over 300 words, player is cheating unless superhuman typing master
-        if (tempWPM <= 300) {
-          //  store the new data
-          const newData = {
-            email: email,
-            avgWPM: Math.floor((points + tempWPM) / (totalRaces + 1)),
-            bestWPM: tempWPM > bestWPM ? tempWPM : bestWPM,
-            lastWPM: tempWPM,
-            totalRaces: totalRaces + 1,
-            points: points + tempWPM,
-            username: username
-          }
-
-          //  set doc data so it gets rendered on profile
-          setDocData(newData)
-          db.collection('users')
-            .doc(email)
-            .set({
-              ...newData
-            })
-            .catch((error) => {
-              console.log(error.message)
-            })
+        const newData = {
+          email: email,
+          avgWPM: Math.floor((points + tempWPM) / (totalRaces + 1)),
+          bestWPM: tempWPM > bestWPM ? tempWPM : bestWPM,
+          lastWPM: tempWPM,
+          totalRaces: totalRaces + 1,
+          points: points + tempWPM,
+          username: username
         }
+
+        //  set doc data so it gets rendered on profile
+        setDocData(newData)
+        db.collection('users')
+          .doc(email)
+          .set({
+            ...newData
+          })
+          .catch((error) => {
+            console.log(error.message)
+          })
       }
 
       setCurrentPageState('summaryState')

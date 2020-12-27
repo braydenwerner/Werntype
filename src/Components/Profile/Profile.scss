@@ -17,6 +17,10 @@
     position: relative;
     bottom: 10%;
 
+    @media (max-height: 800px) {
+      bottom: 0%;
+    }
+
     #inner-stats-container {
       display: flex;
       flex-direction: column;
