@@ -34,11 +34,21 @@
     .nav-leaderboardState-true {
       background-color: #611b6c;
       border-radius: 10px;
+      animation-name: translateUp;
+      animation-duration: 0.5s;
     }
 
     .nav-profileState-true {
       background-color: #9ee493;
       border-radius: 10px;
+      animation-name: translateUp;
+      animation-duration: 0.5s;
+    }
+
+    @keyframes translateUp {
+      50% {
+        transform: translateY(-5px);
+      }
     }
 
     #homeImage,
