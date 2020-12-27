@@ -35,18 +35,20 @@ export default function Nav() {
   //  currentPageState will always be initial value.
   //  https://stackoverflow.com/questions/53845595/wrong-react-hooks-behaviour-with-event-listener
   const handleKeyDown = (e) => {
+    let currentPageIndex
     if (e.key === '`') {
       setCurrentPageState((oldPageState) => {
-        let currentPageIndex = pageStates.indexOf(oldPageState)
+        currentPageIndex = pageStates.indexOf(oldPageState)
 
         if (currentPageIndex < pageStates.length - 1) {
           currentPageIndex++
         } else {
           currentPageIndex = 0
-          resetTypingState()
         }
         return pageStates[currentPageIndex]
       })
+
+      if (currentPageIndex === 0) resetTypingState()
     }
   }
 
