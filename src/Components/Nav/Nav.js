@@ -72,26 +72,34 @@ export default function Nav() {
         <div id="outer-nav-container">
           <div id="inner-nav-container">
             <img
-              className="invertImageColor"
+              className={`nav-typingState-${
+                currentPageState === 'typingState' ? 'true' : 'false'
+              }`}
+              id="homeImage"
               src={images.home}
               onClick={handleHomeClick}
             />
             <img
-              className="invertImageColor"
+              className={`nav-leaderboardState-${
+                currentPageState === 'leaderboardState' ? 'true' : 'false'
+              }`}
+              id="leaderboardImage"
               src={images.leaderboard}
               onClick={handleLeaderBoardClick}
             />
-            <img src={images.profile} onClick={handleStatsClick} />
+            <img
+              className={`nav-profileState-${
+                currentPageState === 'profileState' ? 'true' : 'false'
+              }`}
+              src={images.profile}
+              onClick={handleStatsClick}
+            />
             <a
               target="_blank"
               href="https://github.com/braydenwerner/werntype"
               rel="noreferrer"
             >
-              <img
-                className="invertImageColor"
-                id="github-nav-link"
-                src={images.github}
-              />
+              <img id="githubImage" src={images.github} />
             </a>
           </div>
           <div id="nav-shortcut-text">

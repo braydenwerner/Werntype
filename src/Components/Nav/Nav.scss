@@ -23,13 +23,27 @@
       width: 32px;
       height: 32px;
       margin: 25px 25px 25px 25px;
+      padding: 5px;
     }
 
     img:hover {
       transform: translateY(-3px);
     }
 
-    .invertImageColor {
+    .nav-typingState-true,
+    .nav-leaderboardState-true {
+      background-color: #611b6c;
+      border-radius: 10px;
+    }
+
+    .nav-profileState-true {
+      background-color: #9ee493;
+      border-radius: 10px;
+    }
+
+    #homeImage,
+    #leaderboardImage,
+    #githubImage {
       filter: invert(1);
     }
   }
