@@ -30,7 +30,7 @@ $ npm install
 $ npm start
 ```
 
-Create a .env fileand connect with your firebase information.
+Create a .env file and connect with your firebase information.
 
 ```
 REACT_APP_FIREBASE_API_KEY=<YOUR DATA>
