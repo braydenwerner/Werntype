@@ -17,7 +17,7 @@
 <br /> <br />
 
 <div align="center">
-  <a href="https://werntype.web.app" target="_blank">
+  <a href="https://werntype.web.app">
     <img src="./src/Image/Werntype.png" />
   </a>
 </div>
