@@ -24,8 +24,8 @@
 ### Running Locally
 
 ```
-$ git clone https://github.com/braydenwerner/Wern-Type
-$ cd Wern-Type
+$ git clone https://github.com/braydenwerner/Werntype
+$ cd Werntype
 $ npm install
 $ npm start
 ```
