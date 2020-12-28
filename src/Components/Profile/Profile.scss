@@ -99,6 +99,8 @@
 
       @media (max-width: 550px) {
         flex-direction: column;
+        position: relative;
+        top: 10%;
       }
 
       #signin-container,
@@ -107,7 +109,7 @@
         flex-direction: column;
         width: 50%;
         align-items: center;
-        margin-top: 50px;
+        margin-top: 20px;
 
         @media (max-width: 550px) {
           width: 100%;
