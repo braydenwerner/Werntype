@@ -5,7 +5,11 @@
   text-align: center;
   justify-content: center;
 
-  @media (max-height: 630px) {
+  @media (max-width: 550px) {
+    display: none;
+  }
+
+  @media (max-height: 550px) {
     display: none;
   }
 

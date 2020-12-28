@@ -28,7 +28,11 @@
     color: WHITE;
     margin-top: 25px;
 
-    @media (max-height: 540px) {
+    @media (max-height: 630px) {
+      display: none;
+    }
+
+    @media (max-width: 550px) {
       display: none;
     }
 

@@ -10,10 +10,6 @@
     top: 0%;
   }
 
-  @media (max-height: 530px) {
-    display: none;
-  }
-
   #inner-nav-container {
     display: flex;
     justify-content: center;
@@ -63,7 +59,11 @@
     align-items: center;
     color: WHITE;
 
-    @media (max-height: 640px) {
+    @media (max-height: 680px) {
+      display: none;
+    }
+
+    @media (max-width: 550px) {
       display: none;
     }
 
