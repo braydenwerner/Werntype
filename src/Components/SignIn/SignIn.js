@@ -2,8 +2,8 @@ import React, { useRef, useState, useEffect } from 'react'
 import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
 import { pageState, signedInState, docDataState } from '../../atoms/atoms'
 import { auth, db } from '../../firebase'
-import './Profile.scss'
 import AnimatedHeader from '../AnimatedHeader/AnimatedHeader'
+import './SignIn.scss'
 
 export default function SignIn() {
   const signinRefEmail = useRef(null)
@@ -13,6 +13,7 @@ export default function SignIn() {
   const signupRefPassword = useRef(null)
   const signupRefPasswordConfirm = useRef(null)
 
+  const [signedIn, setSignedIn] = useRecoilState(signedInState)
   const [currentPageState, setCurrentPageState] = useRecoilState(pageState)
 
   const setDocData = useSetRecoilState(docDataState)
@@ -20,12 +21,12 @@ export default function SignIn() {
   const [message, setMessage] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
 
-  //  detects sign in, sign out. retrieves data and runs setDocData() to render
   useEffect(() => {
     if (auth.currentUser && auth.currentUser.emailVerified) {
-      //  set state to signInState
       setCurrentPageState('profileState')
+      setSignedIn(true)
     } else {
+      console.log('signing out')
       signOut()
     }
   }, [])
@@ -55,6 +56,7 @@ export default function SignIn() {
               }
 
               setCurrentPageState('profileState')
+              setSignedIn(true)
             })
             .catch((error) => {
               handleError(error.message)
@@ -74,7 +76,6 @@ export default function SignIn() {
   //  sign up, add defaul values to database
   const signUp = (e) => {
     e.preventDefault()
-
     if (
       signupRefPassword.current.value !== signupRefPasswordConfirm.current.value
     ) {
@@ -159,77 +160,71 @@ export default function SignIn() {
 
   return (
     <>
-      {currentPageState === 'signInState' && (
-        <div id="outer-profile-container">
-          <div id="outer-stats-container">
-            {!signedIn && (
-              <div id="outer-signin-container">
-                <AnimatedHeader text="Sign In To See Profile" />
-                <div id="outer-form-signin">
-                  <form id="signin-container">
-                    <input
-                      type="text"
-                      placeholder="email"
-                      required
-                      ref={signinRefEmail}
-                      autoComplete="on"
-                    />
-                    <input
-                      type="password"
-                      placeholder="password"
-                      required
-                      ref={signinRefPassword}
-                      autoComplete="on"
-                    />
-                    <button onClick={signIn}>Login</button>
-                  </form>
+      {currentPageState === 'signInState' && !signedIn && (
+        <div id="outer-signin-container">
+          <AnimatedHeader text="Sign In To See Profile" />
+          <div id="inner-signin-container">
+            <form id="signin-form">
+              <input
+                type="text"
+                placeholder="email"
+                required
+                ref={signinRefEmail}
+                autoComplete="on"
+              />
+              <input
+                type="password"
+                placeholder="password"
+                required
+                ref={signinRefPassword}
+                autoComplete="on"
+              />
+              <button onClick={signIn}>Login</button>
+            </form>
 
-                  <form id="signup-container">
-                    <input
-                      type="text"
-                      placeholder="email"
-                      required
-                      ref={signupRefEmail}
-                      autoComplete="on"
-                    />
-                    <input
-                      type="text"
-                      placeholder="username"
-                      maxLength="20"
-                      required
-                      ref={signupRefUsername}
-                      autoComplete="on"
-                    />
-                    <input
-                      type="password"
-                      placeholder="password"
-                      required
-                      ref={signupRefPassword}
-                      autoComplete="on"
-                    />
-                    <input
-                      type="password"
-                      placeholder="confirm password"
-                      required
-                      ref={signupRefPasswordConfirm}
-                      autoComplete="on"
-                    />
-                    <button type="submit" onClick={signUp}>
-                      Sign Up
-                    </button>
-                  </form>
-                </div>
-              </div>
-            )}
+            <form id="signup-form">
+              <input
+                type="text"
+                placeholder="email"
+                required
+                ref={signupRefEmail}
+                autoComplete="on"
+              />
+              <input
+                type="text"
+                placeholder="username"
+                maxLength="20"
+                required
+                ref={signupRefUsername}
+                autoComplete="on"
+              />
+              <input
+                type="password"
+                placeholder="password"
+                required
+                ref={signupRefPassword}
+                autoComplete="on"
+              />
+              <input
+                type="password"
+                placeholder="confirm password"
+                required
+                ref={signupRefPasswordConfirm}
+                autoComplete="on"
+              />
+              <button type="submit" onClick={signUp}>
+                Sign Up
+              </button>
+            </form>
           </div>
         </div>
       )}
-      <div className="notification-container">
-        {message !== '' && currentPageState === 'profileState' && (
+      <div id="notification-container">
+        {message !== '' && currentPageState === 'signInState' && (
           <div id="message">{message}</div>
         )}
 
-        {errorMessage !== '' && currentPageState === 'profileState' && (
+        {errorMessage !== '' && currentPageState === 'signInState' && (
           <div id="error-message">{errorMessage}</div>
         )}
       </div>

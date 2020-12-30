@@ -4,6 +4,7 @@ import {
   Keyboard,
   Restart,
   Nav,
+  SignIn,
   Profile,
   Leaderboard
 } from './Components/exports'
@@ -17,6 +18,7 @@ function App() {
       <TypingForm />
       <Keyboard />
       <Leaderboard />
+      <SignIn />
       <Profile />
       <Restart />
     </div>

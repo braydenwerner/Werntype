@@ -1,0 +1,102 @@
+@import '../../Constants/constants.scss';
+
+#outer-signin-container {
+  display: flex;
+  flex-direction: column;
+  width: 800px;
+
+  @media (max-width: 850px) {
+    width: 80%;
+  }
+
+  @media (max-width: 550px) {
+    flex-direction: column;
+    position: relative;
+    top: 10%;
+  }
+
+  #inner-signin-container {
+    display: flex;
+    flex-direction: row;
+
+    @media (max-width: 550px) {
+      flex-direction: column;
+      position: relative;
+      top: 10%;
+    }
+
+    #signin-form,
+    #signup-form {
+      display: flex;
+      flex-direction: column;
+      width: 50%;
+      align-items: center;
+      margin-top: 20px;
+
+      @media (max-width: 550px) {
+        width: 100%;
+      }
+
+      ::placeholder {
+        color: $themeGreen;
+      }
+
+      input:focus {
+        color: $themeGreen;
+      }
+
+      input {
+        color: $themeGreen;
+        font-size: 15px;
+        box-sizing: border-box;
+        width: 60%;
+        background-color: $themeLightBlue;
+        outline: none;
+        margin: 5px 5px 5px 5px;
+        padding: 7px;
+        font-family: $mainHeaderFont;
+        border: none;
+        border-radius: 10px;
+      }
+
+      button {
+        font-size: 15px;
+        width: 60%;
+        background-color: $themeLightBlue;
+        border: none;
+        outline: none;
+        margin: 5px 5px 5px 5px;
+        padding: 5px;
+        font-family: $mainHeaderFont;
+        font-weight: 300;
+        border-radius: 7px;
+        color: $themeGreen;
+      }
+
+      button:hover {
+        background-color: WHITE;
+      }
+    }
+  }
+}
+
+#notification-container {
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  transform: translate(-50%);
+
+  @media (max-width: 550px) {
+    top: 80%;
+  }
+
+  #message {
+    font-family: $mainHeaderFont;
+    color: yellow;
+  }
+
+  #error-message {
+    font-family: $mainHeaderFont;
+    color: red;
+  }
+}

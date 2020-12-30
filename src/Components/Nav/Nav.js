@@ -7,7 +7,8 @@ import {
   correctIndexState,
   currentIndexState,
   pageState,
-  numWordsState
+  numWordsState,
+  signedInState
 } from '../../atoms/atoms'
 import { generateText } from '../../utils/utils'
 import images from '../../Image/exports'
@@ -22,6 +23,7 @@ export default function Nav() {
   const [currentPageState, setCurrentPageState] = useRecoilState(pageState)
 
   const numWords = useRecoilValue(numWordsState)
+  const signedIn = useRecoilValue(signedInState)
 
   const pageStates = ['typingState', 'leaderboardState', 'profileState']
 
@@ -62,7 +64,8 @@ export default function Nav() {
   }
 
   const handleStatsClick = () => {
-    setCurrentPageState('signInState')
+    if (!signedIn) setCurrentPageState('signInState')
+    else setCurrentPageState('profileState')
   }
 
   const resetTypingState = () => {

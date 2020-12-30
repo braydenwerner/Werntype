@@ -1,6 +1,7 @@
 export { default as Keyboard } from './Keyboard/Keyboard'
 export { default as TypingForm } from './TypingForm/TypingForm'
 export { default as Restart } from './Restart/Restart'
+export { default as SignIn } from './SignIn/SignIn'
 export { default as Profile } from './Profile/Profile'
 export { default as Nav } from './Nav/Nav'
 export { default as AnimatedHeader } from './AnimatedHeader/AnimatedHeader'

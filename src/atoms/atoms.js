@@ -47,3 +47,8 @@ export const docDataState = atom({
   key: 'docDataState',
   default: {}
 })
+
+export const signedInState = atom({
+  key: 'signedInState',
+  default: false
+})
