@@ -16,6 +16,11 @@
     bottom: 0%;
   }
 
+  @media (max-width: 860px) {
+    position: relative;
+    top: 4%;
+  }
+
   #inner-stats-container {
     display: flex;
     flex-direction: column;
@@ -71,7 +76,7 @@
 
     button {
       font-size: 18px;
-      width: 40%;
+      width: 30%;
       background-color: $themeLightBlue;
       border: none;
       outline: none;
@@ -81,6 +86,11 @@
       font-weight: 300;
       border-radius: 7px;
       color: $themeGreen;
+
+      @media (max-width: 860px) {
+        margin-top: 15px;
+        width: 100px;
+      }
     }
 
     button:hover {

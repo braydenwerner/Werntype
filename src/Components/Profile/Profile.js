@@ -29,7 +29,6 @@ export default function Profile() {
           <AnimatedHeader text="Profile" />
           <div id="inner-stats-container">
             <h1>{docData.username}</h1>
-            <img src={auth.currentUser.photoURL} />
             <div id="inner-stats-row">
               <h2>Average WPM</h2>
               <div className="stat-box">{docData.avgWPM}</div>
