@@ -62,7 +62,7 @@ export default function Nav() {
   }
 
   const handleStatsClick = () => {
-    setCurrentPageState('profileState')
+    setCurrentPageState('signInState')
   }
 
   const resetTypingState = () => {
