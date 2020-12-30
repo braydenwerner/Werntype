@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { useRecoilValue, useRecoilState } from 'recoil'
 import { pageState, signedInState, docDataState } from '../../atoms/atoms'
 import { auth, db } from '../../firebase'
@@ -6,12 +6,8 @@ import './Profile.scss'
 import AnimatedHeader from '../AnimatedHeader/AnimatedHeader'
 
 export default function Profile() {
-  const currentPageState = useRecoilValue(pageState)
-  const [signedIn, setSignedIn] = useRecoilState(signedInState)
-  const [docData, setDocData] = useRecoilState(docDataState)
-
-  const [message, setMessage] = useState('')
-  const [errorMessage, setErrorMessage] = useState('')
+  const [currentPageState, setCurrentPageState] = useRecoilState(pageState)
+  const docData = useRecoilValue(docDataState)
 
   const signOut = () => {
     //  sign out, change state to signInState
@@ -19,7 +15,7 @@ export default function Profile() {
       handleError(error.message)
     })
 
-    setSignedIn(false)
+    setCurrentPageState('signInState')
   }
 
   return (

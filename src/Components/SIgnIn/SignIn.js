@@ -54,7 +54,7 @@ export default function SignIn() {
                 })
               }
 
-              setSignedIn(true)
+              setCurrentPageState('profileState')
             })
             .catch((error) => {
               handleError(error.message)
