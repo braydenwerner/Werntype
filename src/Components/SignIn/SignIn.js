@@ -83,6 +83,12 @@ export default function SignIn() {
       return
     }
 
+    //  username cannot be only empty characters
+    if (signupRefUsername.current.value.replace(/\s/g, '') === '') {
+      handleError('Username cannot be empty.')
+      return
+    }
+
     const email = signupRefEmail.current.value
     const username = signupRefUsername.current.value
     const password = signupRefPassword.current.value
