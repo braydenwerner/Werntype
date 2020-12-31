@@ -3,7 +3,6 @@ import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
 import { pageState, signedInState, docDataState } from '../../atoms/atoms'
 import { auth } from '../../firebase'
 import './Profile.scss'
-import AnimatedHeader from '../AnimatedHeader/AnimatedHeader'
 
 export default function Profile() {
   const [currentPageState, setCurrentPageState] = useRecoilState(pageState)

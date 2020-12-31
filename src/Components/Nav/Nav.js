@@ -25,13 +25,14 @@ export default function Nav() {
   const numWords = useRecoilValue(numWordsState)
   const signedIn = useRecoilValue(signedInState)
 
-  const pageStates = ['typingState', 'leaderboardState', 'signInState']
+  const pageStates = ['typingState', 'leaderboardState', 'profile/signIn']
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown)
+    console.log('currentPageState: ', currentPageState)
 
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
+  }, [currentPageState])
 
   //  event listeners act different with useState. React thinks new function each time,
   //  currentPageState will always be initial value.
@@ -40,13 +41,19 @@ export default function Nav() {
     let currentPageIndex
     if (e.key === '`') {
       setCurrentPageState((oldPageState) => {
-        currentPageIndex = pageStates.indexOf(oldPageState)
-
-        if (currentPageIndex < pageStates.length - 1) {
-          currentPageIndex++
+        if (oldPageState === 'profileState' || oldPageState === 'signInState') {
+          currentPageIndex = pageStates.indexOf('profile/signIn')
         } else {
-          currentPageIndex = 0
+          currentPageIndex = pageStates.indexOf(oldPageState)
         }
+
+        if (currentPageIndex < pageStates.length - 1) currentPageIndex++
+        else currentPageIndex = 0
+
+        if (pageStates[currentPageIndex] === 'profile/signIn') {
+          return signedIn ? 'profileState' : 'signInState'
+        }
+
         return pageStates[currentPageIndex]
       })
 

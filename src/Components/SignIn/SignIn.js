@@ -38,7 +38,7 @@ export default function SignIn() {
       setCurrentPageState('profileState')
       setSignedIn(true)
     }
-  }, [currentPageState])
+  }, [])
 
   const signIn = (e) => {
     e.preventDefault()
