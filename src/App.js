@@ -6,7 +6,8 @@ import {
   Nav,
   SignIn,
   Profile,
-  Leaderboard
+  Leaderboard,
+  RaceSummary
 } from './Components/exports'
 import './App.scss'
 
@@ -16,6 +17,7 @@ function App() {
     <div id="component-container">
       <Nav />
       <TypingForm />
+      <RaceSummary />
       <Keyboard />
       <Leaderboard />
       <SignIn />

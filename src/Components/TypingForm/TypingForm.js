@@ -185,12 +185,6 @@ export default function TypingForm() {
           ></input>
         </div>
       )}
-
-      {currentPageState === 'summaryState' && (
-        <div id="summaryForm-outer-container">
-          <div id="summary-wpm">WPM: {WPM}</div>
-        </div>
-      )}
     </>
   )
 }

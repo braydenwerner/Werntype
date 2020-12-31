@@ -1,0 +1,11 @@
+@import '../../Constants/constants.scss';
+
+#summaryForm-outer-container {
+  text-align: center;
+  color: $themeGreen;
+
+  #summary-wpm {
+    font-family: $mainFont;
+    font-size: 40px;
+  }
+}
