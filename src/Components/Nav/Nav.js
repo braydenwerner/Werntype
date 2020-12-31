@@ -107,13 +107,6 @@ export default function Nav() {
               src={images.profile}
               onClick={handleStatsClick}
             />
-            <a
-              target="_blank"
-              href="https://github.com/braydenwerner/werntype"
-              rel="noreferrer"
-            >
-              <img id="githubImage" src={images.github} />
-            </a>
           </div>
           <div id="nav-shortcut-text">
             <div id="tilde-key">`</div>- Next Page
