@@ -8,19 +8,22 @@ import {
   currentIndexState,
   pageState,
   numWordsState,
-  signedInState
+  signedInState,
+  segmentedWPMState
 } from '../../atoms/atoms'
 import { generateText } from '../../utils/utils'
 import images from '../../Image/exports'
 import './Nav.scss'
 
 export default function Nav() {
-  const setCurrentPrompt = useSetRecoilState(promptState)
-  const setCurrentWordIndex = useSetRecoilState(wordIndexState)
-  const setCurrentWordStartIndex = useSetRecoilState(wordStartIndexState)
-  const setCurrentCorrectIndex = useSetRecoilState(correctIndexState)
+  const setPrompt = useSetRecoilState(promptState)
+  const setWordIndex = useSetRecoilState(wordIndexState)
+  const setWordStartIndex = useSetRecoilState(wordStartIndexState)
+  const setCorrectIndex = useSetRecoilState(correctIndexState)
   const setCurrentIndex = useSetRecoilState(currentIndexState)
-  const [currentPageState, setCurrentPageState] = useRecoilState(pageState)
+  const setSegmentedWPM = useSetRecoilState(segmentedWPMState)
+
+  const [page, setPage] = useRecoilState(pageState)
 
   const numWords = useRecoilValue(numWordsState)
   const signedIn = useRecoilValue(signedInState)
@@ -34,62 +37,63 @@ export default function Nav() {
     //  event listeners act different with useState. React thinks new function each time,
     //  https://stackoverflow.com/questions/53845595/wrong-react-hooks-behaviour-with-event-listener
     //  therefore need currentPageState as a dependency
-  }, [currentPageState])
+  }, [page])
 
   const handleKeyDown = (e) => {
-    let currentPageIndex
+    let pageIndex
     if (e.key === '`') {
-      setCurrentPageState((oldPageState) => {
-        if (oldPageState === 'profileState' || oldPageState === 'signInState') {
-          currentPageIndex = pageStates.indexOf('profile/signIn')
+      setPage((oldPage) => {
+        if (oldPage === 'profileState' || oldPage === 'signInState') {
+          pageIndex = pageStates.indexOf('profile/signIn')
         } else {
-          currentPageIndex = pageStates.indexOf(oldPageState)
+          pageIndex = pageStates.indexOf(oldPage)
         }
 
-        if (currentPageIndex < pageStates.length - 1) currentPageIndex++
-        else currentPageIndex = 0
+        if (pageIndex < pageStates.length - 1) pageIndex++
+        else pageIndex = 0
 
-        if (pageStates[currentPageIndex] === 'profile/signIn') {
+        if (pageStates[pageIndex] === 'profile/signIn') {
           return signedIn ? 'profileState' : 'signInState'
         }
 
-        return pageStates[currentPageIndex]
+        return pageStates[pageIndex]
       })
 
-      if (currentPageIndex === 0) resetTypingState()
+      if (pageIndex === 0) resetTypingState()
     }
   }
 
   const handleHomeClick = () => {
     resetTypingState()
-    setCurrentPageState('typingState')
+    setPage('typingState')
   }
 
   const handleLeaderBoardClick = () => {
-    setCurrentPageState('leaderboardState')
+    setPage('leaderboardState')
   }
 
   const handleStatsClick = () => {
-    if (!signedIn) setCurrentPageState('signInState')
-    else setCurrentPageState('profileState')
+    if (!signedIn) setPage('signInState')
+    else setPage('profileState')
   }
 
   const resetTypingState = () => {
-    setCurrentPrompt(generateText(numWords))
-    setCurrentWordIndex(0)
-    setCurrentWordStartIndex(0)
-    setCurrentCorrectIndex(0)
+    setPrompt(generateText(numWords))
+    setWordIndex(0)
+    setWordStartIndex(0)
+    setCorrectIndex(0)
     setCurrentIndex(0)
+    setSegmentedWPM([])
   }
 
   return (
     <>
-      {currentPageState !== 'animationState' && (
+      {page !== 'animationState' && (
         <div id="outer-nav-container">
           <div id="inner-nav-container">
             <img
               className={`nav-typingState-${
-                currentPageState === 'typingState' ? 'true' : 'false'
+                page === 'typingState' ? 'true' : 'false'
               }`}
               id="homeImage"
               src={images.home}
@@ -97,7 +101,7 @@ export default function Nav() {
             />
             <img
               className={`nav-leaderboardState-${
-                currentPageState === 'leaderboardState' ? 'true' : 'false'
+                page === 'leaderboardState' ? 'true' : 'false'
               }`}
               id="leaderboardImage"
               src={images.leaderboard}
@@ -105,8 +109,7 @@ export default function Nav() {
             />
             <img
               className={`nav-profileState-${
-                currentPageState === 'profileState' ||
-                currentPageState === 'signInState'
+                page === 'profileState' || page === 'signInState'
                   ? 'true'
                   : 'false'
               }`}

@@ -8,7 +8,7 @@ import AnimatedHeader from '../AnimatedHeader/AnimatedHeader'
 export default function Leaderboard() {
   const dropDownRef = useRef(null)
 
-  const currentPageState = useRecoilValue(pageState)
+  const page = useRecoilValue(pageState)
 
   const [bestScores, setBestScores] = useState([])
   const [sortBy, setSortBy] = useState('bestWPM')
@@ -64,7 +64,7 @@ export default function Leaderboard() {
 
   return (
     <>
-      {currentPageState === 'leaderboardState' && (
+      {page === 'leaderboardState' && (
         <div id="leaderboard-outer-container">
           <div id="leaderboard-select-container">
             <label id="leaderboard-label"> Sorting by</label>

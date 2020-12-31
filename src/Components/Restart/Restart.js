@@ -7,18 +7,20 @@ import {
   promptState,
   wordIndexState,
   wordStartIndexState,
-  numWordsState
+  numWordsState,
+  segmentedWPMState
 } from '../../atoms/atoms'
 import { generateText } from '../../utils/utils'
 import './Restart.scss'
 
 export default function Restart() {
-  const setCurrentPrompt = useSetRecoilState(promptState)
-  const setCurrentWordIndex = useSetRecoilState(wordIndexState)
-  const setCurrentWordStartIndex = useSetRecoilState(wordStartIndexState)
-  const setCurrentCorrectIndex = useSetRecoilState(correctIndexState)
+  const setPrompt = useSetRecoilState(promptState)
+  const setWordIndex = useSetRecoilState(wordIndexState)
+  const setWordStartIndex = useSetRecoilState(wordStartIndexState)
+  const setCorrectIndex = useSetRecoilState(correctIndexState)
   const setCurrentIndex = useSetRecoilState(currentIndexState)
-  const setCurrentPageState = useSetRecoilState(pageState)
+  const setSegmentedWPM = useSetRecoilState(segmentedWPMState)
+  const setPage = useSetRecoilState(pageState)
 
   const numWords = useRecoilValue(numWordsState)
 
@@ -33,12 +35,13 @@ export default function Restart() {
   }
 
   const restart = () => {
-    setCurrentPrompt(generateText(numWords))
-    setCurrentWordIndex(0)
-    setCurrentWordStartIndex(0)
-    setCurrentCorrectIndex(0)
+    setPrompt(generateText(numWords))
+    setWordIndex(0)
+    setWordStartIndex(0)
+    setCorrectIndex(0)
     setCurrentIndex(0)
-    setCurrentPageState('typingState')
+    setSegmentedWPM([])
+    setPage('typingState')
   }
 
   return (

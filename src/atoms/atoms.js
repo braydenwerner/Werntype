@@ -1,7 +1,8 @@
 import { atom } from 'recoil'
 import { generateText } from '../utils/utils'
 
-const promptWordLength = 15
+//  15
+export const promptWordLength = 5
 
 export const promptState = atom({
   key: 'promptState',
@@ -41,6 +42,11 @@ export const pageState = atom({
 export const wpmState = atom({
   key: 'wpmState',
   default: 0
+})
+
+export const segmentedWPMState = atom({
+  key: 'segmentedWPM',
+  default: []
 })
 
 export const docDataState = atom({

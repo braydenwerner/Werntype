@@ -17,7 +17,7 @@ export default function Keyboard() {
   const [keysToHighlight, setKeysToHighlight] = useState(new Set())
 
   //  get global page state and render component accordingly
-  const currentPageState = useRecoilValue(pageState)
+  const page = useRecoilValue(pageState)
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown)
@@ -45,7 +45,7 @@ export default function Keyboard() {
 
   return (
     <>
-      {currentPageState === 'typingState' && (
+      {page === 'typingState' && (
         <div id="keyboard-outer-container">
           {rows.map((row) => {
             return (

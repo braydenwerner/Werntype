@@ -5,7 +5,7 @@ import { auth } from '../../firebase'
 import './Profile.scss'
 
 export default function Profile() {
-  const [currentPageState, setCurrentPageState] = useRecoilState(pageState)
+  const [page, setPage] = useRecoilState(pageState)
 
   const [signedIn, setSignedIn] = useRecoilState(signedInState)
 
@@ -18,12 +18,12 @@ export default function Profile() {
 
     setSignedIn(false)
     localStorage.removeItem('user')
-    setCurrentPageState('signInState')
+    setPage('signInState')
   }
 
   return (
     <>
-      {currentPageState === 'profileState' && signedIn && (
+      {page === 'profileState' && signedIn && (
         <div id="outer-stats-container">
           <div id="inner-stats-container">
             <h1>{docData.username}</h1>

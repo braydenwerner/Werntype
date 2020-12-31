@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useRecoilState, useRecoilValue } from 'recoil'
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil'
 import { db } from '../../firebase'
 import {
   correctIndexState,
@@ -10,7 +10,8 @@ import {
   wordStartIndexState,
   wpmState,
   signedInState,
-  docDataState
+  docDataState,
+  segmentedWPMState
 } from '../../atoms/atoms'
 import './TypingForm.scss'
 
@@ -18,38 +19,39 @@ export default function TypingForm() {
   const formRef = useRef(null)
 
   //  the prompt the user types
-  const currentPrompt = useRecoilValue(promptState)
+  const prompt = useRecoilValue(promptState)
 
-  //  corresponds to the index of each word in currentPrompt.split(" ")
-  const [currentWordIndex, setCurrentWordIndex] = useRecoilState(wordIndexState)
+  //  corresponds to the index of each word in prompt.split(" ")
+  const [wordIndex, setWordIndex] = useRecoilState(wordIndexState)
 
-  //  the index in currentPrompt where current word starts
-  const [currentWordStartIndex, setCurrentWordStartIndex] = useRecoilState(
+  //  the index in prompt where current word starts
+  const [wordStartIndex, setWordStartIndex] = useRecoilState(
     wordStartIndexState
   )
 
   //  the index up to the first incorrect key
-  const [currentCorrectIndex, setCurrentCorrectIndex] = useRecoilState(
-    correctIndexState
-  )
+  const [correctIndex, setCorrectIndex] = useRecoilState(correctIndexState)
 
   //  the current index the user is on, including incorrect keys
   const [currentIndex, setCurrentIndex] = useRecoilState(currentIndexState)
 
   //  toggles state and renders components accordingly
-  const [currentPageState, setCurrentPageState] = useRecoilState(pageState)
-
-  // words per minute the user types
-  const [WPM, setWPM] = useRecoilState(wpmState)
+  const [page, setPage] = useRecoilState(pageState)
 
   //  get and set data for user
   const [docData, setDocData] = useRecoilState(docDataState)
 
-  //  starting time when first key is typed
-  const [startTime, setStartTime] = useState(0)
+  //  array of current WPM after each word
+  const setSegmentedWPM = useSetRecoilState(segmentedWPMState)
+
+  // words per minute the user types
+  const setWPM = useSetRecoilState(wpmState)
 
   //  whether the user is signed in or not
   const signedIn = useRecoilValue(signedInState)
+
+  //  starting time when first key is typed
+  const [startTime, setStartTime] = useState(0)
 
   //  do not allow copy paste into form
   useEffect(() => {
@@ -59,11 +61,11 @@ export default function TypingForm() {
   //  if the prompt is changed, reset the form
   useEffect(() => {
     if (formRef.current) formRef.current.value = ''
-  }, [currentPrompt])
+  }, [prompt])
 
-  //  0 -> currentCorrectIndex is green
-  //  currentCorrectIndex + 1 -> currentIndex is red
-  //  currentCurrentIndex + 1 -> currentPrompt.length is white
+  //  0 -> correctIndex is green
+  //  correctIndex + 1 -> currentIndex is red
+  //  currentCurrentIndex + 1 -> prompt.length is white
   const handleKeyDown = () => {
     //  if the last input was a number, remove it
     const formValue = formRef.current.value
@@ -74,8 +76,8 @@ export default function TypingForm() {
 
     if (currentIndex === 0) setStartTime(Date.now())
 
-    const numWords = currentPrompt.split(' ').length
-    const currentWord = currentPrompt.split(' ')[currentWordIndex]
+    const numWords = prompt.split(' ').length
+    const currentWord = prompt.split(' ')[wordIndex]
 
     let correctChars = 0
     while (
@@ -85,30 +87,48 @@ export default function TypingForm() {
       correctChars++
     }
 
-    const totalCorrectIndex = currentWordStartIndex + correctChars
-    const totalIndex = currentWordStartIndex + formValue.length
+    const totalCorrectIndex = wordStartIndex + correctChars
+    const totalIndex = wordStartIndex + formValue.length
 
+    //  space bar pressed, new word
     if (
       formValue[formValue.length - 1] === ' ' &&
       formValue.substring(0, formValue.length - 1) === currentWord
     ) {
-      setCurrentWordIndex((oldCurrentWord) => {
+      setWordIndex((oldCurrentWord) => {
         return oldCurrentWord + 1
       })
 
-      setCurrentWordStartIndex((oldCurrentWordStartIndex) => {
+      setWordStartIndex((oldCurrentWordStartIndex) => {
         return oldCurrentWordStartIndex + formValue.length
       })
 
+      //  if no mistypes
+      if (totalCorrectIndex === totalIndex - 1) {
+        console.log('adding')
+        setSegmentedWPM((oldSegmentedWPM) => {
+          return [
+            ...oldSegmentedWPM,
+            Math.floor(
+              totalCorrectIndex / 4.7 / ((Date.now() - startTime) / 60000)
+            )
+          ]
+        })
+      }
+
+      //  add the current speed of the user to array
       formRef.current.value = ''
     }
 
-    if (currentWordIndex === numWords - 1 && formValue === currentWord) {
+    if (wordIndex === numWords - 1 && formValue === currentWord) {
       //  4.7 is the average length of word in English dictionary
       const tempWPM = Math.floor(
-        currentCorrectIndex / 4.7 / ((Date.now() - startTime) / 60000)
+        totalCorrectIndex / 4.7 / ((Date.now() - startTime) / 60000)
       )
       setWPM(tempWPM)
+      setSegmentedWPM((oldSegmentedWPM) => {
+        return [...oldSegmentedWPM, tempWPM]
+      })
 
       //  update user's stats
       //  if over 300 words, player is probably cheating
@@ -141,10 +161,10 @@ export default function TypingForm() {
           })
       }
 
-      setCurrentPageState('summaryState')
+      setPage('summaryState')
     }
 
-    setCurrentCorrectIndex(totalCorrectIndex)
+    setCorrectIndex(totalCorrectIndex)
     setCurrentIndex(totalIndex)
   }
 
@@ -155,20 +175,20 @@ export default function TypingForm() {
 
   return (
     <>
-      {currentPageState === 'typingState' && (
+      {page === 'typingState' && (
         <div id="typingForm-outer-container">
           <div id="text-prompt">
             <span style={{ color: '9EE493' }}>
-              {currentPrompt.substring(0, currentCorrectIndex)}
+              {prompt.substring(0, correctIndex)}
             </span>
             <span style={{ color: 'RED' }}>
-              {currentPrompt.substring(currentCorrectIndex, currentIndex)}
+              {prompt.substring(correctIndex, currentIndex)}
             </span>
             <span style={{ color: 'WHITE', textDecoration: 'underline' }}>
-              {currentPrompt.substring(currentIndex, currentIndex + 1)}
+              {prompt.substring(currentIndex, currentIndex + 1)}
             </span>
             <span style={{ color: 'WHITE' }}>
-              {currentPrompt.substring(currentIndex + 1, currentPrompt.length)}
+              {prompt.substring(currentIndex + 1, prompt.length)}
             </span>
           </div>
           <input

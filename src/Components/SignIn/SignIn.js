@@ -14,7 +14,7 @@ export default function SignIn() {
   const signupRefPasswordConfirm = useRef(null)
 
   const [signedIn, setSignedIn] = useRecoilState(signedInState)
-  const [currentPageState, setCurrentPageState] = useRecoilState(pageState)
+  const [page, setPage] = useRecoilState(pageState)
 
   const setDocData = useSetRecoilState(docDataState)
 
@@ -35,7 +35,7 @@ export default function SignIn() {
         lastWPM: userData.lastWPM
       })
 
-      setCurrentPageState('profileState')
+      setPage('profileState')
       setSignedIn(true)
     }
   }, [])
@@ -67,7 +67,7 @@ export default function SignIn() {
                 localStorage.setItem('user', JSON.stringify(tempDocData))
               }
 
-              setCurrentPageState('profileState')
+              setPage('profileState')
               setSignedIn(true)
             })
             .catch((error) => {
@@ -170,7 +170,7 @@ export default function SignIn() {
 
   return (
     <>
-      {currentPageState === 'signInState' && !signedIn && (
+      {page === 'signInState' && !signedIn && (
         <div id="outer-signin-container">
           <AnimatedHeader text="Sign In To See Profile" />
           <div id="inner-signin-container">
@@ -230,11 +230,11 @@ export default function SignIn() {
         </div>
       )}
       <div id="notification-container">
-        {message !== '' && currentPageState === 'signInState' && (
+        {message !== '' && page === 'signInState' && (
           <div id="message">{message}</div>
         )}
 
-        {errorMessage !== '' && currentPageState === 'signInState' && (
+        {errorMessage !== '' && page === 'signInState' && (
           <div id="error-message">{errorMessage}</div>
         )}
       </div>
