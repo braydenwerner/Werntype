@@ -31,11 +31,11 @@ export default function Nav() {
     window.addEventListener('keydown', handleKeyDown)
 
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
+    //  event listeners act different with useState. React thinks new function each time,
+    //  https://stackoverflow.com/questions/53845595/wrong-react-hooks-behaviour-with-event-listener
+    //  therefore need currentPageState as a dependency
+  }, [currentPageState])
 
-  //  event listeners act different with useState. React thinks new function each time,
-  //  currentPageState will always be initial value.
-  //  https://stackoverflow.com/questions/53845595/wrong-react-hooks-behaviour-with-event-listener
   const handleKeyDown = (e) => {
     let currentPageIndex
     if (e.key === '`') {
