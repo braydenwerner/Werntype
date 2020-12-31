@@ -29,10 +29,9 @@ export default function Nav() {
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown)
-    console.log('currentPageState: ', currentPageState)
 
     return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [currentPageState])
+  }, [])
 
   //  event listeners act different with useState. React thinks new function each time,
   //  currentPageState will always be initial value.
