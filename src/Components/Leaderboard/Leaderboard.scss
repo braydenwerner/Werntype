@@ -11,6 +11,10 @@
     width: 80%;
   }
 
+  @media (max-width: 410px) {
+    width: 100%;
+  }
+
   @media (max-height: 670px) {
     top: 2%;
   }
@@ -42,7 +46,6 @@
 
   #leaderboard-table {
     font-family: $mainFont;
-    width: 100%;
     color: $themeBlue;
 
     @media (max-width: 850px) {
@@ -62,6 +65,12 @@
 
       td {
         padding: 7px;
+      }
+
+      #leaderboard-position {
+        display: flex;
+        position: relative;
+        margin-left: 6px;
       }
     }
   }

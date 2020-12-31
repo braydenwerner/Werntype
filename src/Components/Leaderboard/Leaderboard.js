@@ -35,8 +35,8 @@ export default function Leaderboard() {
         scores.sort((a, b) => b.totalRaces - a.totalRaces)
       }
 
-      //  take top 8 scores
-      scores = scores.splice(0, 8)
+      //  take top 10 scores
+      scores = scores.splice(0, 10)
 
       setBestScores(scores)
     })
@@ -66,7 +66,6 @@ export default function Leaderboard() {
     <>
       {currentPageState === 'leaderboardState' && (
         <div id="leaderboard-outer-container">
-          <AnimatedHeader text="Leaderboard" />
           <div id="leaderboard-select-container">
             <label id="leaderboard-label"> Sorting by</label>
             <select
@@ -86,6 +85,7 @@ export default function Leaderboard() {
                 id="leaderboard-header-row"
                 className={`isPrimaryColor-${isPrimary}`}
               >
+                <th>#</th>
                 <th>Username</th>
                 <th>Best WPM</th>
                 <th>Average WPM</th>
@@ -101,6 +101,7 @@ export default function Leaderboard() {
                     id="leaderboard-inner-row"
                     className={`isPrimaryColor-${isPrimary}`}
                   >
+                    <td id="leaderboard-position">{i + 1}</td>
                     <td>{score.username}</td>
                     <td>{score.bestWPM}</td>
                     <td>{score.avgWPM}</td>

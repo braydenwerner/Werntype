@@ -99,7 +99,10 @@ export default function Nav() {
             />
             <img
               className={`nav-profileState-${
-                currentPageState === 'profileState' ? 'true' : 'false'
+                currentPageState === 'profileState' ||
+                currentPageState === 'signInState'
+                  ? 'true'
+                  : 'false'
               }`}
               src={images.profile}
               onClick={handleStatsClick}

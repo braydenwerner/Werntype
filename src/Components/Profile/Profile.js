@@ -26,18 +26,25 @@ export default function Profile() {
     <>
       {currentPageState === 'profileState' && (
         <div id="outer-stats-container">
-          <AnimatedHeader text="Profile" />
           <div id="inner-stats-container">
             <h1>{docData.username}</h1>
             <div id="inner-stats-row">
-              <h2>Average WPM</h2>
-              <div className="stat-box">{docData.avgWPM}</div>
-              <h2>Fastest WPM</h2>
-              <div className="stat-box">{docData.bestWPM}</div>
-              <h2>Last WPM</h2>
-              <div className="stat-box">{docData.lastWPM}</div>
-              <h2>Total Races</h2>
-              <div className="stat-box">{docData.totalRaces}</div>
+              <div className="stat-box">
+                <div className="stat-box-data">{docData.avgWPM}</div>
+                <h2>Average WPM</h2>
+              </div>
+              <div className="stat-box">
+                <div className="stat-box-data">{docData.bestWPM}</div>
+                <h2>Fastest WPM</h2>
+              </div>
+              <div className="stat-box">
+                <div className="stat-box-data">{docData.lastWPM}</div>
+                <h2>Last WPM</h2>
+              </div>
+              <div className="stat-box">
+                <div className="stat-box-data">{docData.totalRaces}</div>
+                <h2>Total Races</h2>
+              </div>
             </div>
             <button onClick={signOut}>Sign out</button>
           </div>
