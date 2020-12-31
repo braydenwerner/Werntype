@@ -2,7 +2,7 @@ import { atom } from 'recoil'
 import { generateText } from '../utils/utils'
 
 //  15
-export const promptWordLength = 5
+export const promptWordLength = 15
 
 export const promptState = atom({
   key: 'promptState',

@@ -9,6 +9,20 @@
   align-items: center;
   margin-top: 50px;
 
+  #graph-canvas {
+    @media (max-width: 850px) {
+      width: 600px;
+    }
+
+    @media (max-width: 610px) {
+      width: 400px;
+    }
+
+    @media (max-width: 420px) {
+      width: 300px;
+    }
+  }
+
   #summary-wpm {
     font-family: $mainFont;
     font-size: 40px;
@@ -17,5 +31,10 @@
     border-radius: 5px;
     margin: 5px 10px 10px 5px;
     width: 230px;
+
+    @media (max-width: 610px) {
+      font-size: 30px;
+      width: 180px;
+    }
   }
 }
