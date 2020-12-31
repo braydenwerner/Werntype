@@ -8,23 +8,23 @@ import AnimatedHeader from '../AnimatedHeader/AnimatedHeader'
 export default function Profile() {
   const [currentPageState, setCurrentPageState] = useRecoilState(pageState)
 
-  const setSignedIn = useSetRecoilState(signedInState)
+  const [signedIn, setSignedIn] = useRecoilState(signedInState)
 
   const docData = useRecoilValue(docDataState)
 
   const signOut = () => {
-    console.log('signing out from profile')
     auth.signOut().catch((error) => {
       console.log(error)
     })
 
     setSignedIn(false)
+    localStorage.removeItem('user')
     setCurrentPageState('signInState')
   }
 
   return (
     <>
-      {currentPageState === 'profileState' && (
+      {currentPageState === 'profileState' && signedIn && (
         <div id="outer-stats-container">
           <div id="inner-stats-container">
             <h1>{docData.username}</h1>

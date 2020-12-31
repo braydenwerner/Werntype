@@ -22,12 +22,22 @@ export default function SignIn() {
   const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
-    if (auth.currentUser && auth.currentUser.emailVerified) {
+    console.log(localStorage.getItem('user'))
+    //  if user data saved in local storage, no need to log back in
+    const userData = JSON.parse(localStorage.getItem('user'))
+    if (userData) {
+      setDocData({
+        email: userData.email,
+        avgWPM: userData.avgWPM,
+        username: userData.username,
+        totalRaces: userData.totalRaces,
+        bestWPM: userData.bestWPM,
+        points: userData.points,
+        lastWPM: userData.lastWPM
+      })
+
       setCurrentPageState('profileState')
       setSignedIn(true)
-    } else {
-      console.log('signing out')
-      signOut()
     }
   }, [])
 
@@ -48,11 +58,14 @@ export default function SignIn() {
             .get()
             .then((doc) => {
               if (doc.exists) {
-                //  console.log('doc.data(): ', doc.data())
-                setDocData({
+                const tempDocData = {
                   email: auth.currentUser.email,
                   ...doc.data()
-                })
+                }
+                setDocData(tempDocData)
+
+                //  save data in local storage so user does not have to sign in every time
+                localStorage.setItem('user', JSON.stringify(tempDocData))
               }
 
               setCurrentPageState('profileState')
@@ -154,14 +167,6 @@ export default function SignIn() {
     setErrorMessage(error)
     const unsetErrorInterval = setInterval(() => setErrorMessage(' '), 5000)
     setTimeout(() => clearInterval(unsetErrorInterval), 5000)
-  }
-
-  const signOut = () => {
-    auth.signOut().catch((error) => {
-      handleError(error.message)
-    })
-
-    setSignedIn(false)
   }
 
   return (
