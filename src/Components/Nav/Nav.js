@@ -25,7 +25,7 @@ export default function Nav() {
   const numWords = useRecoilValue(numWordsState)
   const signedIn = useRecoilValue(signedInState)
 
-  const pageStates = ['typingState', 'leaderboardState', 'profileState']
+  const pageStates = ['typingState', 'leaderboardState', 'signInState']
 
   useEffect(() => {
     window.addEventListener('keydown', handleKeyDown)

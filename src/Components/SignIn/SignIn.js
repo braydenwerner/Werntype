@@ -22,7 +22,6 @@ export default function SignIn() {
   const [errorMessage, setErrorMessage] = useState('')
 
   useEffect(() => {
-    console.log(localStorage.getItem('user'))
     //  if user data saved in local storage, no need to log back in
     const userData = JSON.parse(localStorage.getItem('user'))
     if (userData) {
@@ -39,7 +38,7 @@ export default function SignIn() {
       setCurrentPageState('profileState')
       setSignedIn(true)
     }
-  }, [])
+  }, [currentPageState])
 
   const signIn = (e) => {
     e.preventDefault()
