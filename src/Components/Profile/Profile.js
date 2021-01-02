@@ -1,15 +1,31 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
 import { pageState, signedInState, docDataState } from '../../atoms/atoms'
-import { auth } from '../../firebase'
+import { db, auth } from '../../firebase'
 import './Profile.scss'
 
 export default function Profile() {
+  const [signedIn, setSignedIn] = useRecoilState(signedInState)
   const [page, setPage] = useRecoilState(pageState)
 
-  const [signedIn, setSignedIn] = useRecoilState(signedInState)
-
   const docData = useRecoilValue(docDataState)
+
+  useEffect(() => {
+    //  last 10 wpm avg added late, have to add it to doc if doesn't exist
+    if (signedIn) {
+      console.log(docData)
+      if (!docData.avgLast10Races || !docData.last10Races) {
+        //  create it
+        db.collection('users')
+          .doc(docData.email)
+          .set({
+            ...docData,
+            avgLast10Races: 'No races yet',
+            last10Races: []
+          })
+      }
+    }
+  }, [docData])
 
   const signOut = () => {
     auth.signOut().catch((error) => {
@@ -31,6 +47,12 @@ export default function Profile() {
               <div className="stat-box">
                 <div className="stat-box-data">{docData.avgWPM}</div>
                 <h2>Average WPM</h2>
+              </div>
+              <div className="stat-box">
+                <div className="stat-box-data">
+                  {docData.avgLast10Races ? docData.avgLast10Races : 0}
+                </div>
+                <h2>Average WPM (Last 10 Races)</h2>
               </div>
               <div className="stat-box">
                 <div className="stat-box-data">{docData.bestWPM}</div>

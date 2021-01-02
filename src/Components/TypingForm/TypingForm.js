@@ -55,7 +55,7 @@ export default function TypingForm() {
 
   //  do not allow copy paste into form
   useEffect(() => {
-    if (formRef) formRef.current.onpaste = (e) => e.preventDefault()
+    if (formRef.current) formRef.current.onpaste = (e) => e.preventDefault()
   }, [])
 
   //  if the prompt is changed, reset the form
@@ -105,7 +105,6 @@ export default function TypingForm() {
 
       //  if no mistypes
       if (totalCorrectIndex === totalIndex - 1) {
-        console.log('adding')
         setSegmentedWPM((oldSegmentedWPM) => {
           return [
             ...oldSegmentedWPM,
@@ -122,7 +121,7 @@ export default function TypingForm() {
 
     if (wordIndex === numWords - 1 && formValue === currentWord) {
       //  4.7 is the average length of word in English dictionary
-      const tempWPM = Math.floor(
+      const tempWPM = Math.round(
         totalCorrectIndex / 4.7 / ((Date.now() - startTime) / 60000)
       )
       setWPM(tempWPM)
@@ -133,20 +132,66 @@ export default function TypingForm() {
       //  update user's stats
       //  if over 300 words, player is probably cheating
       if (signedIn && tempWPM <= 300) {
-        const bestWPM = docData.bestWPM
-        const email = docData.email
-        const totalRaces = docData.totalRaces
+        //  calculate new values
+        const bestWPM = tempWPM > docData.bestWPM ? tempWPM : docData.bestWPM
+        const totalRaces = docData.totalRaces + 1
+        const points = docData.points + tempWPM
+        const avgWPM = Math.floor((points + tempWPM) / (totalRaces + 1))
+        const lastWPM = tempWPM
         const username = docData.username
-        const points = docData.points
+        const email = docData.email
+
+        let last10Races = docData.last10Races
+        let avgLast10Races = docData.avgLast10Races
+
+        console.log(last10Races)
+
+        //  last 10 races added to database later, have to check if it exists
+        if (
+          !last10Races ||
+          !avgLast10Races ||
+          avgLast10Races === 'No races yet'
+        ) {
+          db.collection('users')
+            .doc(docData.email)
+            .set({
+              ...docData,
+              last10Races: [tempWPM],
+              avgLast10Races: tempWPM
+            })
+
+          last10Races = [tempWPM]
+          avgLast10Races = tempWPM
+        } else {
+          //  if it exists, create a copy
+          last10Races = [...last10Races]
+
+          if (last10Races.length < 10) {
+            last10Races.push(tempWPM)
+          } else {
+            last10Races.shift()
+            last10Races.push(tempWPM)
+          }
+
+          // calculate average
+          avgLast10Races = Math.round(
+            last10Races.reduce((a, b) => a + b) / last10Races.length
+          )
+        }
+
+        console.log(last10Races)
+        console.log(avgLast10Races)
 
         const newData = {
-          email: email,
-          avgWPM: Math.floor((points + tempWPM) / (totalRaces + 1)),
-          bestWPM: tempWPM > bestWPM ? tempWPM : bestWPM,
-          lastWPM: tempWPM,
-          totalRaces: totalRaces + 1,
-          points: points + tempWPM,
-          username: username
+          bestWPM,
+          totalRaces,
+          points,
+          avgWPM,
+          lastWPM,
+          username,
+          email,
+          last10Races,
+          avgLast10Races
         }
 
         //  set doc data so it gets rendered on profile

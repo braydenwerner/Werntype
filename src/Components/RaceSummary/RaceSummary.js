@@ -18,7 +18,6 @@ export default function RaceSummary() {
 
   useEffect(() => {
     const ctx = canvasRef.current
-    console.log(segmentedWPM)
     if (segmentedWPM.length > 0) {
       const lineChart = new Chart(ctx, {
         type: 'line',
