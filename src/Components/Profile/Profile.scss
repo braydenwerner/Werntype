@@ -5,8 +5,15 @@
   width: 800px;
   flex-direction: column;
   position: relative;
-  bottom: 2%;
+  top: 1%;
   align-items: center;
+
+  h1 {
+    margin: 0;
+    position: relative;
+    color: white;
+    font-family: $mainFont;
+  }
 
   @media (max-width: 850px) {
     width: 80%;
@@ -21,28 +28,24 @@
     top: 4%;
   }
 
-  #inner-stats-container {
+  #outer-stats-column-container {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    width: 100%;
 
-    h1 {
-      color: white;
-      font-size: 44px;
-
-      @media (max-width: 700px) {
-        display: none;
-      }
-    }
-
-    #inner-stats-row {
+    #stats-column1-container {
       display: flex;
-      margin-top: 15px;
-      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      width: 40%;
 
-      @media (max-width: 700px) {
-        flex-direction: column;
-        align-items: center;
+      h1 {
+        color: white;
+        font-size: 24px;
+
+        @media (max-width: 700px) {
+          display: none;
+        }
       }
 
       .stat-box {
@@ -51,12 +54,13 @@
         align-items: center;
         background-color: $themeLightBlue;
         border-radius: 5px;
-        margin: 5px 10px 10px 5px;
+        margin: 5px 0px 5px 0px;
         width: 160px;
+        text-align: center;
 
         h2 {
           color: $themeGreen;
-          font-size: 20px;
+          font-size: 12px;
           margin-bottom: 10px;
 
           @media (max-width: 700px) {
@@ -71,9 +75,9 @@
           font-family: $mainFont;
           color: WHITE;
           padding: 4px;
-          font-size: 32px;
-          width: 85px;
-          height: 60px;
+          font-size: 22px;
+          width: 70px;
+          height: 25px;
 
           @media (max-width: 700px) {
             width: 100%;
@@ -81,29 +85,33 @@
           }
         }
       }
-    }
 
-    button {
-      font-size: 18px;
-      width: 30%;
-      background-color: $themeLightBlue;
-      border: none;
-      outline: none;
-      margin: 35px 5px 5px 5px;
-      padding: 5px;
-      font-family: $mainHeaderFont;
-      font-weight: 300;
-      border-radius: 7px;
-      color: $themeGreen;
+      button {
+        font-size: 18px;
+        width: 160px;
+        background-color: $themeLightBlue;
+        border: none;
+        outline: none;
+        margin: 5px 5px 5px 5px;
+        padding: 5px;
+        font-family: $mainHeaderFont;
+        font-weight: 300;
+        border-radius: 7px;
+        color: $themeGreen;
+      }
 
-      @media (max-width: 860px) {
-        margin-top: 15px;
-        width: 100px;
+      button:hover {
+        background-color: WHITE;
       }
     }
 
-    button:hover {
-      background-color: WHITE;
+    #stats-column2-container {
+      display: flex;
+      align-items: center;
+
+      #profile-graph {
+        margin-top: 20px;
+      }
     }
   }
 }

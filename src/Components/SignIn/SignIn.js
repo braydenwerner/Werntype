@@ -23,17 +23,26 @@ export default function SignIn() {
 
   useEffect(() => {
     //  if user data saved in local storage, no need to log back in
-    const userData = JSON.parse(localStorage.getItem('user'))
+    //  userData is the email of the user already logged in through local storage
+    const userData = localStorage.user
     if (userData) {
-      setDocData({
-        email: userData.email,
-        avgWPM: userData.avgWPM,
-        username: userData.username,
-        totalRaces: userData.totalRaces,
-        bestWPM: userData.bestWPM,
-        points: userData.points,
-        lastWPM: userData.lastWPM
-      })
+      //  query database for values of user
+      const docRef = db.collection('users').doc(userData)
+
+      docRef
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            const tempDocData = {
+              email: auth.currentUser.email,
+              ...doc.data()
+            }
+            setDocData(tempDocData)
+          }
+        })
+        .catch((error) => {
+          handleError(error.message)
+        })
 
       setPage('profileState')
       setSignedIn(true)
@@ -63,8 +72,8 @@ export default function SignIn() {
                 }
                 setDocData(tempDocData)
 
-                //  save data in local storage so user does not have to sign in every time
-                localStorage.setItem('user', JSON.stringify(tempDocData))
+                //  mark user as signed in on local data
+                localStorage.setItem('user', auth.currentUser.email)
               }
 
               setPage('profileState')
@@ -128,7 +137,9 @@ export default function SignIn() {
                   avgWPM: 0,
                   lastWPM: 0,
                   totalRaces: 0,
-                  points: 0
+                  points: 0,
+                  avgLast10Races: 0,
+                  last10Races: []
                 })
                 .catch((error) => {
                   handleError(error.message)

@@ -144,43 +144,18 @@ export default function TypingForm() {
         let last10Races = docData.last10Races
         let avgLast10Races = docData.avgLast10Races
 
-        console.log(last10Races)
-
-        //  last 10 races added to database later, have to check if it exists
-        if (
-          !last10Races ||
-          !avgLast10Races ||
-          avgLast10Races === 'No races yet'
-        ) {
-          db.collection('users')
-            .doc(docData.email)
-            .set({
-              ...docData,
-              last10Races: [tempWPM],
-              avgLast10Races: tempWPM
-            })
-
-          last10Races = [tempWPM]
-          avgLast10Races = tempWPM
+        last10Races = [...last10Races]
+        if (last10Races.length < 10) {
+          last10Races.push(tempWPM)
         } else {
-          //  if it exists, create a copy
-          last10Races = [...last10Races]
-
-          if (last10Races.length < 10) {
-            last10Races.push(tempWPM)
-          } else {
-            last10Races.shift()
-            last10Races.push(tempWPM)
-          }
-
-          // calculate average
-          avgLast10Races = Math.round(
-            last10Races.reduce((a, b) => a + b) / last10Races.length
-          )
+          last10Races.shift()
+          last10Races.push(tempWPM)
         }
 
-        console.log(last10Races)
-        console.log(avgLast10Races)
+        // calculate average
+        avgLast10Races = Math.round(
+          last10Races.reduce((a, b) => a + b) / last10Races.length
+        )
 
         const newData = {
           bestWPM,

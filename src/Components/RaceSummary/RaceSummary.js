@@ -58,7 +58,7 @@ export default function RaceSummary() {
     <>
       {page === 'summaryState' && (
         <div id="summaryForm-outer-container">
-          <canvas id="graph-canvas" ref={canvasRef} />
+          <canvas id="summary-graph" ref={canvasRef} />
           <div id="summary-wpm">WPM: {WPM}</div>
         </div>
       )}

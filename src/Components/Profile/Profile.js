@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
+import Chart from 'chart.js'
 import { useRecoilValue, useRecoilState, useSetRecoilState } from 'recoil'
 import { pageState, signedInState, docDataState } from '../../atoms/atoms'
 import { db, auth } from '../../firebase'
@@ -10,22 +11,52 @@ export default function Profile() {
 
   const docData = useRecoilValue(docDataState)
 
+  const canvasRef = useRef(null)
+
   useEffect(() => {
-    //  last 10 wpm avg added late, have to add it to doc if doesn't exist
-    if (signedIn) {
+    //  if there exists a valid refernce to canvas, draw a graph
+    console.log(signedIn)
+    console.log(Object.keys(docData).length > 0)
+    console.log(canvasRef.current)
+    console.log(page)
+
+    if (signedIn && Object.keys(docData).length > 0 && canvasRef.current) {
       console.log(docData)
-      if (!docData.avgLast10Races || !docData.last10Races) {
-        //  create it
-        db.collection('users')
-          .doc(docData.email)
-          .set({
-            ...docData,
-            avgLast10Races: 'No races yet',
-            last10Races: []
-          })
-      }
+      const ctx = canvasRef.current
+      const lineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: [...Array(docData.last10Races.length).keys()].map((i) => ++i),
+          datasets: [
+            {
+              label: '',
+              data: docData.last10Races,
+
+              borderColor: 'rgb(158, 228, 147)'
+            }
+          ]
+        },
+        options: {
+          legend: {
+            display: false
+          },
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true
+                },
+                scaleLabel: {
+                  display: true,
+                  labelString: 'WPM'
+                }
+              }
+            ]
+          }
+        }
+      })
     }
-  }, [docData])
+  }, [page, signedIn, canvasRef.current, docData])
 
   const signOut = () => {
     auth.signOut().catch((error) => {
@@ -41,12 +72,12 @@ export default function Profile() {
     <>
       {page === 'profileState' && signedIn && (
         <div id="outer-stats-container">
-          <div id="inner-stats-container">
-            <h1>{docData.username}</h1>
-            <div id="inner-stats-row">
+          <h1>{docData.username}</h1>
+          <div id="outer-stats-column-container">
+            <div id="stats-column1-container">
               <div className="stat-box">
                 <div className="stat-box-data">{docData.avgWPM}</div>
-                <h2>Average WPM</h2>
+                <h2>Average WPM (All Time)</h2>
               </div>
               <div className="stat-box">
                 <div className="stat-box-data">
@@ -66,8 +97,17 @@ export default function Profile() {
                 <div className="stat-box-data">{docData.totalRaces}</div>
                 <h2>Total Races</h2>
               </div>
+              <button onClick={signOut}>Sign out</button>
             </div>
-            <button onClick={signOut}>Sign out</button>
+
+            <div id="stats-column2-container">
+              <canvas
+                id="profile-graph"
+                ref={canvasRef}
+                width="500px"
+                height="450px"
+              />
+            </div>
           </div>
         </div>
       )}
