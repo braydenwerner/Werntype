@@ -15,40 +15,76 @@ export default function Profile() {
 
   useEffect(() => {
     //  if there exists a valid refernce to canvas, draw a graph
-    console.log(signedIn)
-    console.log(Object.keys(docData).length > 0)
-    console.log(canvasRef.current)
-    console.log(page)
-
     if (signedIn && Object.keys(docData).length > 0 && canvasRef.current) {
       console.log(docData)
       const ctx = canvasRef.current
+      Chart.defaults.global.legend.labels.usePointStyle = true
       const lineChart = new Chart(ctx, {
         type: 'line',
         data: {
           labels: [...Array(docData.last10Races.length).keys()].map((i) => ++i),
           datasets: [
             {
-              label: '',
+              pointStyle: 'rectRot',
+              label: 'Last 10 Races',
               data: docData.last10Races,
-
               borderColor: 'rgb(158, 228, 147)'
+            },
+            {
+              pointStyle: 'rectRot',
+              label: 'Average WPM (Last 10 Races)',
+              data: [...Array(docData.last10Races.length).keys()].map(
+                () => docData.avgLast10Races
+              ),
+              pointRadius: 0,
+
+              borderColor: 'rgb(258, 128, 147)'
+            },
+            {
+              pointStyle: 'rectRot',
+              label: 'Average WPM (All Time)',
+              data: [...Array(docData.last10Races.length).keys()].map(
+                () => docData.avgWPM
+              ),
+              pointRadius: 0,
+
+              borderColor: 'rgb(258, 228, 147)'
             }
           ]
         },
         options: {
           legend: {
-            display: false
+            labels: {
+              fontColor: 'WHITE',
+              fontSize: 13
+            }
           },
           scales: {
             yAxes: [
               {
                 ticks: {
+                  beginAtZero: true,
+                  fontColor: 'WHITE'
+                },
+                scaleLabel: {
+                  display: true,
+                  fontColor: 'WHITE',
+                  fontSize: 18,
+                  labelString: 'Words Per Minute'
+                }
+              }
+            ],
+            xAxes: [
+              {
+                ticks: {
+                  fontColor: 'WHITE',
                   beginAtZero: true
                 },
                 scaleLabel: {
                   display: true,
-                  labelString: 'WPM'
+                  fontColor: 'WHITE',
+                  fontSize: 18,
+                  labelString: 'Race #'
                 }
               }
             ]
@@ -87,7 +123,7 @@ export default function Profile() {
               </div>
               <div className="stat-box">
                 <div className="stat-box-data">{docData.bestWPM}</div>
-                <h2>Fastest WPM</h2>
+                <h2>Best WPM</h2>
               </div>
               <div className="stat-box">
                 <div className="stat-box-data">{docData.lastWPM}</div>
