@@ -108,7 +108,6 @@ export default function Profile() {
     <>
       {page === 'profileState' && signedIn && (
         <div id="outer-stats-container">
-          <h1>{docData.username}</h1>
           <div id="outer-stats-column-container">
             <div id="stats-column1-container">
               <div className="stat-box">
@@ -137,11 +136,12 @@ export default function Profile() {
             </div>
 
             <div id="stats-column2-container">
+              <h1>{docData.username}</h1>
               <canvas
                 id="profile-graph"
                 ref={canvasRef}
                 width="500px"
-                height="450px"
+                height="350px"
               />
             </div>
           </div>
