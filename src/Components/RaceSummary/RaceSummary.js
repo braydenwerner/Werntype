@@ -40,11 +40,27 @@ export default function RaceSummary() {
             yAxes: [
               {
                 ticks: {
-                  beginAtZero: true
+                  beginAtZero: true,
+                  fontColor: 'WHITE'
                 },
                 scaleLabel: {
                   display: true,
-                  labelString: 'WPM'
+                  fontColor: 'WHITE',
+                  fontSize: 18,
+                  labelString: 'Words Per Minute'
+                }
+              }
+            ],
+            xAxes: [
+              {
+                ticks: {
+                  fontColor: 'WHITE'
+                },
+                scaleLabel: {
+                  display: true,
+                  fontColor: 'WHITE',
+                  fontSize: 18,
+                  labelString: 'Race #'
                 }
               }
             ]
