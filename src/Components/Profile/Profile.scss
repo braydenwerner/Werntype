@@ -8,13 +8,6 @@
   top: 4%;
   align-items: center;
 
-  h1 {
-    margin: 0;
-    position: relative;
-    color: white;
-    font-family: $mainFont;
-  }
-
   @media (max-width: 835px) {
     width: 100%;
   }
@@ -116,6 +109,10 @@
       h1 {
         color: white;
         font-size: 24px;
+
+        @media (max-width: 585px) {
+          display: none;
+        }
       }
 
       #profile-graph {
